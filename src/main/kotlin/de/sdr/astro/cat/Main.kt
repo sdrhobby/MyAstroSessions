@@ -9,7 +9,7 @@ import de.sdr.astro.cat.gui.MainFrame
 fun main(args: Array<String>) {
     // initialize configurations
     Config.getInstance()
-    Config.getInstance().switchLocale("")
+    Config.getInstance().switchLocale( Config.getInstance().locale, false )
 
     LafManager.install(IntelliJTheme())
 

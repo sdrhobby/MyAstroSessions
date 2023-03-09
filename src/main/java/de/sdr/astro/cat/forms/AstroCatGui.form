@@ -20,10 +20,11 @@
               <splitpane position="left"/>
             </constraints>
             <properties>
+              <dividerLocation value="180"/>
               <dividerSize value="8"/>
               <oneTouchExpandable value="true"/>
               <orientation value="0"/>
-              <resizeWeight value="0.3"/>
+              <resizeWeight value="0.5"/>
             </properties>
             <border type="none"/>
             <children>
@@ -62,7 +63,7 @@
                       <gridbag weightx="0.5" weighty="0.0"/>
                     </constraints>
                     <properties>
-                      <label value="[astrocatgui_btn_scan / l10n]"/>
+                      <label value="Scan"/>
                       <text resource-bundle="l10n" key="astrocatgui_btn_scan"/>
                     </properties>
                   </component>

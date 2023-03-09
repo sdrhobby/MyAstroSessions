@@ -4,12 +4,9 @@ import de.sdr.astro.cat.model.OverlayInfo
 import de.sdr.astro.cat.model.Session
 import java.awt.Dimension
 import java.awt.Point
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.InputStreamReader
+import java.io.*
 import java.util.*
+import javax.swing.JOptionPane
 
 class Config private constructor() {
 
@@ -28,6 +25,7 @@ class Config private constructor() {
     var autoscan = false
     var locationOnScreen = Point(0, 0)
     var frameSize = Dimension(1000, 660)
+    var locale = ""
 
     val unknownConfigLines: MutableList<String> = mutableListOf()
 
@@ -38,8 +36,6 @@ class Config private constructor() {
         fun getInstance(): Config {
             if (instance == null) {
                 instance = Config()
-                instance?.switchLocale("en")
-
                 instance?.checkReadmeTemplate()
                 instance?.readConfigFile()
             }
@@ -56,39 +52,52 @@ class Config private constructor() {
             println("config-folder created: " + getInstance().configFileFolder.mkdirs())
         }
         val fw = FileWriter(getInstance().configFileName)
-        fw.write("# last size of main windown" + System.lineSeparator())
+        fw.write("# Gui language setting" + System.lineSeparator())
+        fw.write("locale=${locale}" + System.lineSeparator())
+
+        fw.write("# last size of main window" + System.lineSeparator())
         fw.write("windowlocation=${locationOnScreen.x},${locationOnScreen.y} " + System.lineSeparator())
         fw.write("windowsize=${frameSize.width}x${frameSize.height} " + System.lineSeparator())
 
         fw.write("# default Astro-image folder" + System.lineSeparator())
-        fw.write("folder=" + getInstance().scanFolder + "" + System.lineSeparator())
-        fw.write("autoscan=$autoscan")
+        fw.write("folder=" + getInstance().scanFolder + System.lineSeparator())
+        fw.write("autoscan=$autoscan" + System.lineSeparator())
 
-        fw.write("\n# Telescope configurations" + System.lineSeparator())
-        fw.write("ID; Name; FocalLength; Aperture; Keywords" + System.lineSeparator())
+        fw.write(System.lineSeparator())
+        fw.write("# Telescope configurations" + System.lineSeparator())
+        fw.write("# ID; Name; FocalLength; Aperture; Keywords" + System.lineSeparator())
         for (telescope in getInstance().telescopes) {
             fw.write(telescope.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# Camera configurations" + System.lineSeparator())
-        fw.write("ID; Name; xRes; yRes; xPixel-Size; yPixel-Size; Keywords" + System.lineSeparator())
+        fw.write(System.lineSeparator())
+        fw.write("# Camera configurations" + System.lineSeparator())
+        fw.write("# ID; Name; xRes; yRes; xPixel-Size; yPixel-Size; Keywords" + System.lineSeparator())
         for (camera in getInstance().cameras) {
             fw.write(camera.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# Mounts configurations" + System.lineSeparator())
+
+        fw.write(System.lineSeparator())
+        fw.write("# Mounts configurations" + System.lineSeparator())
         for (mount in getInstance().mounts) {
             fw.write(mount.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# Profiles configurations" + System.lineSeparator())
+
+        fw.write(System.lineSeparator())
+        fw.write("# Profiles configurations" + System.lineSeparator())
         for (profile in getInstance().profiles) {
             fw.write(profile.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# overlay coordinates for AstroObjects" + System.lineSeparator())
+
+        fw.write(System.lineSeparator())
+        fw.write("# skymap overlay coordinates for AstroObjects" + System.lineSeparator())
         for (overlayInfo in getInstance().overlayInfos) {
             fw.write(overlayInfo.toConfigLine() + "" + System.lineSeparator())
         }
+
+        fw.write(System.lineSeparator())
         // write "unknown" lines that have been read from orig config-file during startup
-        fw.write("\n# un-interpreted lines, copied from original config file" + System.lineSeparator())
-        fw.write("\n# maybe written by a new version of this software" + System.lineSeparator())
+        fw.write("# un-interpreted lines, copied from original config file" + System.lineSeparator())
+        fw.write("# maybe written by another version of this software" + System.lineSeparator())
         for (line in unknownConfigLines) {
             fw.write(line + "" + System.lineSeparator())
         }
@@ -104,7 +113,9 @@ class Config private constructor() {
             for (line in fr.readLines()) {
                 if (line.isEmpty() || line.startsWith('#'))
                     continue
-                if (line.startsWith("windowlocation")) {
+                if (line.startsWith("locale")) {
+                    locale = line.substring(line.indexOf('=') + 1).trim()
+                } else if (line.startsWith("windowlocation")) {
                     try {
                         val sub = line.substring(line.indexOf('=') + 1).trim()
                         val arr = sub.split(',')
@@ -213,7 +224,16 @@ class Config private constructor() {
         overlayInfos.addAll(newOverlayInfos)
     }
 
-    fun switchLocale(loc: String) {
+
+    fun switchLocale(loc: String, showDialog: Boolean) {
+        if (showDialog) {
+            val answer = JOptionPane.showMessageDialog(
+                null, String.format(getInstance().l10n.getString("config_language.confirm.msg")),
+                getInstance().l10n.getString("config_language.confirm.title"),
+                JOptionPane.INFORMATION_MESSAGE
+            )
+        }
+        this.locale = loc
         l10n = if (loc.isEmpty()) {
             ResourceBundle.getBundle("l10n")
         } else {

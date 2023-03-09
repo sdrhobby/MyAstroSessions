@@ -4,6 +4,7 @@ import com.github.weisj.darklaf.LafManager
 import com.github.weisj.darklaf.theme.DarculaTheme
 import com.github.weisj.darklaf.theme.IntelliJTheme
 import de.sdr.astro.cat.config.Config
+import de.sdr.astro.cat.config.Config.Companion.getInstance
 import de.sdr.astro.cat.forms.AstroCatGui
 import de.sdr.astro.cat.forms.ConfigPanel
 import java.awt.Color
@@ -22,7 +23,7 @@ class MainFrame : JFrame() {
         SwingUtilities.invokeLater {
             initGlobalUISettings()
 
-            title = "AstroCat (by sdr)"
+            title = "MyAstroSessions v" + getInstance().l10n.getString("VERSION") + " (by sdr)"
             preferredSize = Config.getInstance().frameSize
             contentPane = AstroCatGui.getInstance().topPanelAstroCatGui
             AstroCatGui.getInstance().mainFrame = this
@@ -87,14 +88,14 @@ class MainFrame : JFrame() {
 
         val menuLook = JMenu(Config.getInstance().l10n.getString("menu_view"))
 
-        val menuItemLightTheme = JMenuItem("Light (Intellij)")
+        val menuItemLightTheme = JMenuItem("Light")
         menuItemLightTheme.setMnemonic('L')
         menuItemLightTheme.addActionListener {
             LafManager.setTheme(IntelliJTheme())
             LafManager.install()
             LafManager.forceLafUpdate()
         }
-        val menuItemDarkTheme = JMenuItem("Dark (Darcula)")
+        val menuItemDarkTheme = JMenuItem("Dark")
         menuItemDarkTheme.setMnemonic('D')
         menuItemDarkTheme.addActionListener {
             LafManager.setTheme(DarculaTheme())
@@ -109,13 +110,18 @@ class MainFrame : JFrame() {
         val menuItemLangDe = JMenuItem("Deutsch")
         menuItemLangDe.setMnemonic('D')
         menuItemLangDe.addActionListener {
-            Config.getInstance().switchLocale("de")
+            Config.getInstance().switchLocale("de", true)
         }
+        if ( "de".equals( Config.getInstance().locale ) )
+            menuItemLangDe.isEnabled = false
+
         val menuItemLangEn = JMenuItem("English")
         menuItemLangEn.setMnemonic('E')
         menuItemLangEn.addActionListener {
-            Config.getInstance().switchLocale("en")
+            Config.getInstance().switchLocale("en", true )
         }
+        if ( "en".equals( Config.getInstance().locale ) || Config.getInstance().locale.isEmpty() )
+            menuItemLangEn.isEnabled = false
 
         val langMenu = JMenu(Config.getInstance().l10n.getString("menu_language"))
         langMenu.add(menuItemLangDe)

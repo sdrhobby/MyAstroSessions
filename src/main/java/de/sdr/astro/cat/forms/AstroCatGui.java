@@ -271,7 +271,6 @@ public class AstroCatGui {
                 sessions.add((Session) node.getNodeObject());
             }
         }
-        System.out.println("--------Sessions: ");
         int currentYear = 0;
         int currentMonth = -1;
         DefaultTreeModel treeModel = getTimelineTreeModel();
@@ -283,7 +282,7 @@ public class AstroCatGui {
 
         // iterate sorted sessions, from newest to oldest
         for (Session session : sessions) {
-            System.out.println(session.getName());
+//            System.out.println(session.getName());
             int year = session.getDate().getYear();
             int month = session.getDate().getMonthValue();
             // if next year starts, create year node under root
@@ -558,10 +557,11 @@ public class AstroCatGui {
         splitPane1.setDividerSize(8);
         topPanelAstroCatGui.add(splitPane1, BorderLayout.CENTER);
         final JSplitPane splitPane2 = new JSplitPane();
+        splitPane2.setDividerLocation(180);
         splitPane2.setDividerSize(8);
         splitPane2.setOneTouchExpandable(true);
         splitPane2.setOrientation(0);
-        splitPane2.setResizeWeight(0.3);
+        splitPane2.setResizeWeight(0.5);
         splitPane1.setLeftComponent(splitPane2);
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
@@ -586,7 +586,7 @@ public class AstroCatGui {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(buttonSelect, gbc);
         buttonScan = new JButton();
-        buttonScan.setLabel("[astrocatgui_btn_scan / l10n]");
+        buttonScan.setLabel("Scan");
         this.$$$loadButtonText$$$(buttonScan, this.$$$getMessageFromBundle$$$("l10n", "astrocatgui_btn_scan"));
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
