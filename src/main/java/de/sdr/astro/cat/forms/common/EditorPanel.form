@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.sdr.astro.cat.forms.common.EditorPanel">
+  <grid id="27dc6" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="514" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <scrollpane id="f5716">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="aa06b" class="javax.swing.JEditorPane" binding="editorPane">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <grid id="37526" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+        <constraints border-constraint="South"/>
+        <properties>
+          <preferredSize width="0" height="36"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="24cd6" class="javax.swing.JButton" binding="btnResetEditor">
+            <constraints/>
+            <properties>
+              <text resource-bundle="l10n" key="common_reset"/>
+            </properties>
+          </component>
+          <component id="cb4a9" class="javax.swing.JButton" binding="btnSaveEditor">
+            <constraints/>
+            <properties>
+              <text resource-bundle="l10n" key="common_save"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

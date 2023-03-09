@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.sdr.astro.cat.forms.AstroCatGui">
+  <grid id="27dc6" binding="topPanelAstroCatGui" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="626" height="522"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <splitpane id="48792">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <dividerLocation value="354"/>
+          <dividerSize value="8"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <splitpane id="5f63d">
+            <constraints>
+              <splitpane position="left"/>
+            </constraints>
+            <properties>
+              <dividerSize value="8"/>
+              <oneTouchExpandable value="true"/>
+              <orientation value="0"/>
+              <resizeWeight value="0.3"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="4dd99" layout-manager="GridBagLayout">
+                <constraints>
+                  <splitpane position="left"/>
+                </constraints>
+                <properties>
+                  <maximumSize width="2147483647" height="200"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="87418" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <text resource-bundle="l10n" key="astrocatgui_label_folder"/>
+                      <verticalAlignment value="1"/>
+                    </properties>
+                  </component>
+                  <component id="40242" class="javax.swing.JButton" binding="buttonSelect">
+                    <constraints>
+                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="astrocatgui_btn_select"/>
+                    </properties>
+                  </component>
+                  <component id="30aea" class="javax.swing.JButton" binding="buttonScan">
+                    <constraints>
+                      <grid row="6" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.5" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <label value="[astrocatgui_btn_scan / l10n]"/>
+                      <text resource-bundle="l10n" key="astrocatgui_btn_scan"/>
+                    </properties>
+                  </component>
+                  <component id="37a61" class="javax.swing.JCheckBox" binding="checkBoxAutoScan">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <enabled value="true"/>
+                      <text resource-bundle="l10n" key="astrocatgui_check_scan_automatically"/>
+                    </properties>
+                  </component>
+                  <component id="453c3" class="javax.swing.JTextField" binding="textFieldPath">
+                    <constraints>
+                      <grid row="2" column="1" row-span="2" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                      <gridbag weightx="0.1" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <alignmentX value="0.5"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <hspacer id="6a0aa">
+                    <constraints>
+                      <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="5b58a">
+                    <constraints>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="97a6c">
+                    <constraints>
+                      <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <vspacer id="8efa0">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="4909d">
+                    <constraints>
+                      <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="bdb52">
+                    <constraints>
+                      <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="bf56" class="javax.swing.JTextField" binding="tfFilter">
+                    <constraints>
+                      <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                      <gridbag weightx="0.5" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <toolTipText resource-bundle="l10n" key="astrocatgui_tooltip_filter"/>
+                    </properties>
+                  </component>
+                  <component id="3e3fa" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="astrocatgui_label_filter"/>
+                    </properties>
+                  </component>
+                  <component id="dddd1" class="javax.swing.JButton" binding="btnClearFilter">
+                    <constraints>
+                      <grid row="8" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="common_reset"/>
+                    </properties>
+                  </component>
+                  <hspacer id="80efa">
+                    <constraints>
+                      <grid row="8" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+              <tabbedpane id="5d888" binding="tabbedPaneTrees">
+                <constraints>
+                  <splitpane position="right"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="639c1" binding="panelFolders" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <tabbedpane title-resource-bundle="l10n" title-key="common_folders"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="c15dd">
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="d1fd5" class="javax.swing.JTree" binding="treeSessionFolders">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="1befa" binding="panelTimeline" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <tabbedpane title-resource-bundle="l10n" title-key="common_timeline"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="d0158">
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="b6a4e" class="javax.swing.JTree" binding="treeSessionTimeline">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="cefcd" binding="panelAstroObjects" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <tabbedpane title-resource-bundle="l10n" title-key="common_astroobjects"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="4e147">
+                        <constraints border-constraint="Center"/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="f1682" class="javax.swing.JTree" binding="treeAstroObjects">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                </children>
+              </tabbedpane>
+            </children>
+          </splitpane>
+          <grid id="8f98d" binding="panelContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <splitpane position="right"/>
+            </constraints>
+            <properties>
+              <preferredSize width="400" height="0"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </splitpane>
+      <component id="4f8f4" class="javax.swing.JLabel" binding="labelStatus">
+        <constraints border-constraint="South"/>
+        <properties>
+          <maximumSize width="42" height="24"/>
+          <minimumSize width="42" height="24"/>
+          <preferredSize width="42" height="24"/>
+          <text value="Status"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

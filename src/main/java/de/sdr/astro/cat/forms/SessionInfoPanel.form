@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.sdr.astro.cat.forms.SessionInfoPanel">
+  <grid id="27dc6" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="800" height="600"/>
+    </constraints>
+    <properties>
+      <minimumSize width="800" height="600"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <tabbedpane id="29f85" binding="tabbedPane1" default-binding="true">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="d178b" binding="panelSessionInfo" layout-manager="GridBagLayout">
+            <constraints>
+              <tabbedpane title-resource-bundle="l10n" title-key="common_sessioninfo"/>
+            </constraints>
+            <properties>
+              <preferredSize width="800" height="600"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="d7d5f" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.5"/>
+                </constraints>
+                <properties/>
+                <border type="line" title-resource-bundle="l10n" title-key="sessioninfo_capture.settings"/>
+                <children>
+                  <component id="8f708" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="common_object"/>
+                    </properties>
+                  </component>
+                  <vspacer id="18bf">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="e58cd" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="common_date"/>
+                    </properties>
+                  </component>
+                  <component id="c22d3" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="sessioninfo_capture.time"/>
+                    </properties>
+                  </component>
+                  <vspacer id="5b781">
+                    <constraints>
+                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="7b36a">
+                    <constraints>
+                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <hspacer id="48c0">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <component id="39a80" class="javax.swing.JLabel" binding="lblStart">
+                    <constraints>
+                      <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="start"/>
+                    </properties>
+                  </component>
+                  <component id="5e4bc" class="javax.swing.JLabel" binding="lblObject">
+                    <constraints>
+                      <grid row="1" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="object"/>
+                    </properties>
+                  </component>
+                  <component id="abd9d" class="javax.swing.JLabel" binding="lblDate">
+                    <constraints>
+                      <grid row="3" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="date"/>
+                    </properties>
+                  </component>
+                  <component id="2962" class="javax.swing.JLabel" binding="lblEnd">
+                    <constraints>
+                      <grid row="5" column="5" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="end"/>
+                    </properties>
+                  </component>
+                  <scrollpane id="4cda0">
+                    <constraints>
+                      <grid row="9" column="1" row-span="1" col-span="9" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.2" weighty="0.2"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="118f8" class="javax.swing.JTable" binding="tableImageData">
+                        <constraints/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </scrollpane>
+                  <hspacer id="9ccc2">
+                    <constraints>
+                      <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                  <vspacer id="70f4f">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </vspacer>
+                  <component id="b73cf" class="javax.swing.JLabel" binding="lblTotalCaptureTime">
+                    <constraints>
+                      <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="Label"/>
+                    </properties>
+                  </component>
+                  <component id="b191e" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text resource-bundle="l10n" key="sessioninfo_total.exposure"/>
+                    </properties>
+                  </component>
+                  <component id="a5fdf" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="0" left="5" bottom="0" right="5" weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text value="-"/>
+                    </properties>
+                  </component>
+                  <grid id="1e5c2" binding="panelImagePreview" layout-manager="BorderLayout" hgap="0" vgap="0">
+                    <constraints>
+                      <grid row="1" column="9" row-span="7" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <minimumSize width="200" height="150"/>
+                      <preferredSize width="200" height="150"/>
+                    </properties>
+                    <border type="none"/>
+                    <children/>
+                  </grid>
+                  <hspacer id="662f">
+                    <constraints>
+                      <grid row="1" column="10" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+              <grid id="d83f8" binding="panelEquipmentPlaceholder" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.2"/>
+                </constraints>
+                <properties/>
+                <border type="line" title-resource-bundle="l10n" title-key="sessioninfo_equipment.label"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
+          <grid id="aa885" binding="panelSessionReadme" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <tabbedpane title-resource-bundle="l10n" title-key="sessioninfo_notes"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="a6308" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+                <constraints border-constraint="North"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="407f5" class="javax.swing.JButton" binding="buttonApplyReadmeTemplate">
+                    <constraints/>
+                    <properties>
+                      <text resource-bundle="l10n" key="sessioninfo_notes_apply.template"/>
+                      <toolTipText value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
+    </children>
+  </grid>
+</form>

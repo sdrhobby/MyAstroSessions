@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.sdr.astro.cat.forms.ConfigEquipmentPanel">
+  <grid id="27dc6" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="65434" binding="Equipment" layout-manager="GridBagLayout">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="228b0" binding="panelTelescopes" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.2"/>
+            </constraints>
+            <properties/>
+            <border type="none" title-resource-bundle="l10n" title-key="equipment_caption.optics"/>
+            <children>
+              <scrollpane id="d16d0">
+                <constraints>
+                  <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="7" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="7169e" class="javax.swing.JTable" binding="tableTelescopes" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <autoResizeMode value="4"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="e6234" class="javax.swing.JButton" binding="btnDeleteTelescope">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="false"/>
+                  <text resource-bundle="l10n" key="equipment_delete.selected"/>
+                </properties>
+              </component>
+              <component id="5a17e" class="javax.swing.JButton" binding="btnNewTelescope">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="l10n" key="equipment_new.telescope"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="36adf" binding="panelCameras" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="600" height="100"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="0.2"/>
+            </constraints>
+            <properties/>
+            <border type="none" title-resource-bundle="l10n" title-key="common_cameras"/>
+            <children>
+              <scrollpane id="9cffc" binding="jScrollPaneCameras">
+                <constraints>
+                  <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="af158" class="javax.swing.JTable" binding="tableCameras">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="1e34d" class="javax.swing.JButton" binding="btnAddCamera">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="l10n" key="equipment_new.camera"/>
+                </properties>
+              </component>
+              <component id="3bbbf" class="javax.swing.JButton" binding="btnDeleteCamera">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="false"/>
+                  <text resource-bundle="l10n" key="equipment_delete.selected"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="f75e8" binding="panelMounts" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="600" height="100"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="0.2"/>
+            </constraints>
+            <properties/>
+            <border type="none" title-resource-bundle="l10n" title-key="equipment_mounts"/>
+            <children>
+              <scrollpane id="ffef0">
+                <constraints>
+                  <grid row="0" column="0" row-span="2" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="d5e01" class="javax.swing.JTable" binding="tableMounts">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="d3ee5" class="javax.swing.JButton" binding="btnAddMount">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="l10n" key="equipment_new.mount"/>
+                </properties>
+              </component>
+              <component id="7a859" class="javax.swing.JButton" binding="btnDeleteMount">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="false"/>
+                  <text resource-bundle="l10n" key="equipment_delete.selected"/>
+                </properties>
+              </component>
+              <component id="6391b" class="javax.swing.JButton" binding="btnSaveEquipment">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="l10n" key="common_save"/>
+                </properties>
+              </component>
+              <component id="713f6" class="javax.swing.JButton" binding="btnCancel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text resource-bundle="l10n" key="common_cancel"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <vspacer id="f386e">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

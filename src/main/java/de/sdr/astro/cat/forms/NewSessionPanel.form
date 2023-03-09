@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.sdr.astro.cat.forms.NewSessionPanel">
+  <grid id="27dc6" binding="topPanel" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="20" y="20" width="530" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="e3afb" binding="panelSessionInfo" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.2" weighty="0.2"/>
+        </constraints>
+        <properties/>
+        <border type="none" title-resource-bundle="l10n" title-key="common_sessioninfo"/>
+        <children>
+          <component id="ee51" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text resource-bundle="l10n" key="newsession_session.name"/>
+            </properties>
+          </component>
+          <hspacer id="415da">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </hspacer>
+          <vspacer id="23b8c">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+          </vspacer>
+          <component id="59884" class="javax.swing.JTextField" binding="textFieldNamePart1">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="10"/>
+              <editable value="false"/>
+              <toolTipText value="Session Namen beginnen mit dem Datum der Session"/>
+            </properties>
+          </component>
+          <component id="fc504" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="+"/>
+            </properties>
+          </component>
+          <component id="8b40b" class="javax.swing.JTextField" binding="textFieldNamePart2">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <columns value="10"/>
+              <toolTipText value="optionaler Prefix für den Session Namen"/>
+            </properties>
+          </component>
+          <component id="5ada5" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text resource-bundle="l10n" key="newsession_create"/>
+            </properties>
+          </component>
+          <component id="c0ecf" class="javax.swing.JCheckBox" binding="checkLights">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="lights"/>
+              <toolTipText value="Lege Ordner &quot;lights&quot; an"/>
+            </properties>
+          </component>
+          <component id="d1898" class="javax.swing.JCheckBox" binding="checkFlats">
+            <constraints>
+              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="flats"/>
+              <toolTipText value="lege Ordner &quot;flats&quot; an"/>
+            </properties>
+          </component>
+          <component id="416d2" class="javax.swing.JCheckBox" binding="checkDarks">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="darks"/>
+              <toolTipText value="lege Ordner &quot;darks&quot; an"/>
+            </properties>
+          </component>
+          <component id="74b3" class="javax.swing.JCheckBox" binding="checkBiases">
+            <constraints>
+              <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="biases"/>
+              <toolTipText value="lege Ordner &quot;biases&quot; an"/>
+            </properties>
+          </component>
+          <component id="2e882" class="javax.swing.JCheckBox" binding="checkReadme">
+            <constraints>
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Readme.txt"/>
+              <toolTipText value="lege Readme.txt für Session-Notizen an"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <hspacer id="9d74a">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="b5690">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+      <grid id="b7aab" binding="panelEquipmentPlacehoder" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.2" weighty="0.2"/>
+        </constraints>
+        <properties/>
+        <border type="none" title-resource-bundle="l10n" title-key="newsession_equipment"/>
+        <children/>
+      </grid>
+      <hspacer id="deabf">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </hspacer>
+      <grid id="25297" binding="panelButtons" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="a3bb8" class="javax.swing.JButton" binding="btnCancel">
+            <constraints/>
+            <properties>
+              <text value="Abbrechen"/>
+            </properties>
+          </component>
+          <component id="5bb44" class="javax.swing.JButton" binding="btnCreateSession">
+            <constraints/>
+            <properties>
+              <text value="Session anlegen"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
