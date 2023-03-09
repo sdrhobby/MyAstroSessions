@@ -19,16 +19,26 @@ OR I could write a tool - once - that does it for me - everytime.
 - some kind of searching/filtering features 
 - ... and much more
 
-## How does it look like?
 
 
 ## How does it work?
-### The file structure
+### The main concept
+The main goal is to treat the filesystem and the images as the "database". 
+The tool will only read and never modify existing data nor create any secondary database(s). Modifications to the file-structure shall be done outside the app by normal OS file-system tools.
+(I don't want to risk a loss of important data.)
+
+There are just two exceptions to this rule:
+- It allows to create a suitable structure for a new capture session in a place of your choice.
+- The app may produce a ".myastro.session" file in a session folder to store equipment-related information
+
+Apart from that it will save some general configuration stuff in a ".config/myastrosessions/" folder.
+
+### The folder structure
 My workflow - and therefore the organization of the files on the disk - is inspired by Siril https://siril.org/ (one of the coolest Open Source projects on earth).
 
 My capture sessions may produce structures like this one:
-- Leo-Triplet
-    - 2023-03-08-Capture session 1
+- Leo-Triplet;-)
+    - **2023-03-08**-Capture session 1
       - lights
           - lots of images
       - darks
@@ -37,7 +47,7 @@ My capture sessions may produce structures like this one:
           - lots of images
       - biases
           - lots of images
-      - some object.fits/tiffs/jpegs as result images
+      - some leo-triplet.fits/tiffs/jpegs as result images
 
 **NOTE**: The date prefix in the session name is MANDATORY. Otherwise this folder will not be recognized as a capture session.
 
@@ -46,10 +56,10 @@ You may have your own structuring of all the top folders, e.g. by galaxies, nebu
 As soon as there is a folder starting with the mentioned date prefix, it is treated as a capture session.
 The name of the direct parent folder is interpreted as the name of the Astro-Object that was the target of the session. 
 
-If you use filters the lights part may also look like this 
+Btw. if you use filters the lights part may also look like this 
 (any folder name that does not start with a "." or "_" directly below the lights folder is treated as a Filter):
     
-    - 2023-03-09-Capture session 2
+    - **2023-03-09**-Capture session 2
       - lights
           - L
               - lots of images
@@ -65,10 +75,8 @@ If you use filters the lights part may also look like this
               - lots of images
       - [calibration frame part looks as above]
 
-Until now the tool works on such type of structure, because - it works for me ;-), but it may be adapted to other common structures, if there is interest.
+Until now the tool works on such type of structure, just because - it works for me ;-), 
+It may be extended and adapted to other common structures, if there is interest.
 
-### What the tool does?
-When you select the top folder of your capturings and press the "Scan" it will read the complete folder structure below.
+## How does it look like?
 
-I will detect capture sessions based on the date-prefix of format yyyy-mm-dd in their folder name.
-The name of the sessions parent folder is treated as the name of the Astro-Object that has been captured.
