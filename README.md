@@ -122,5 +122,5 @@ For the fits-metadata part I found the https://www.eso.org/~pgrosbol/fits_java/ 
 
 The exif-metadata part is using https://github.com/drewnoakes/metadata-extractor - thanks to Drew Noakes for this peace of SW!
 
-##Btw...
+## Btw...
 The app comes with an english and a german localization. You can switch between them in the menu - it becomes active after a program restart.
