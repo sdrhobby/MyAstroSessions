@@ -81,6 +81,19 @@ It may be extended and adapted to other common structures, if there is interest.
 
 ## How does it look like?
 
+The main application window with some details for a selected session:
+
+![grafik](https://user-images.githubusercontent.com/127389748/224138696-ba87a7af-1ba3-4c56-9573-0f1542d37c07.png)
+
+The timeline view with an active Filter ("bode") and the details of one of the sessions that matched this filter: 
+
+![grafik](https://user-images.githubusercontent.com/127389748/224138976-5eed099b-5b29-430a-bd44-debc6d30cf69.png)
+
+The dialog to configure equipment and assign some keywords that can be looked up in the image metadata.
+
+![grafik](https://user-images.githubusercontent.com/127389748/224139145-01c064ec-2bce-4a1d-bb94-ee6b1baa23e0.png)
+
+
 ## The more technical stuff ...
 I implemented the app in a mix of Kotlin and Java. 
 The result is a jar-file that should be standalone and runnable with any Java runtime 1.8 or higher.
