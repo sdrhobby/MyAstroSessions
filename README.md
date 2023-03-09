@@ -7,9 +7,9 @@ Sometimes I manage to document everything during a capturing session, either on 
 
 What is there in any case are the images on the hard drive - and they hold lots of information. 
 I could of course use some tools to browse exif and fits headers and collect what I need - everytime. 
-OR I could write a tool - once - that does it for me - everytime.   
+OR I could write a tool - once, that does it for me - everytime.   
 
-## What is it that I'm interested in? 
+## What I'm interested in? 
 - Which equipment (optical, cameras, mount ...) did I use for a session?
 - How many subs of which type did I capture during a special session?
 - What have been the capture settings (exposure, iso, gain, bias)?
