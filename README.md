@@ -103,7 +103,7 @@ then clone the whole repo, run:
 in the top folder - cross your fingers - and if you are lucky there should be a "MyAstroSessions-0.9.jar" in the "target" folder. 
 (I struggled a bit with the correct maven pom.xml but finally found a configuration that worked in my Linux setup.)
 
-On the first start (or actually at the first exit ;-) it should create some config files in <your-home-folder>/.config/myastrosessions. 
+On the first start (or actually at the first exit ;-) it should create some config files in your-home-folder/.config/myastrosessions. 
 This is how it works on Linux - I hope it does similar things on MacOS and Windows.
 
 ## What else ...?
