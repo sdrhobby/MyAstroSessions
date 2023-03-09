@@ -1,6 +1,6 @@
 # MyAstroSessions
 ## What is it about?
-I started this program to keep track of my personal astrophoto sessions.
+I started this program to keep track of my personal astrophoto sessions. I started this hobby recently in 2021
 Each night under the sky produces lots of data, mainly - all the different types of captured images.
 Sometimes I manage to document everything during a capturing session, either on paper on in a textfile - sometimes not.
 
@@ -59,7 +59,7 @@ The name of the direct parent folder is interpreted as the name of the Astro-Obj
 Btw. if you use filters the lights part may also look like this 
 (any folder name that does not start with a "." or "_" directly below the lights folder is treated as a Filter):
     
-    - **2023-03-09**-Capture session 2
+    - 2023-03-09-Capture session 2
       - lights
           - L
               - lots of images
@@ -80,3 +80,43 @@ It may be extended and adapted to other common structures, if there is interest.
 
 ## How does it look like?
 
+## The more technical stuff ...
+I implemented the app in a mix of Kotlin and Java. 
+The result is a jar-file that should be standalone and runnable with any Java runtime 1.8 or higher.
+I developed and tested it only on Linux so far. I don't have access to Mac or Windows machines, 
+but I will try to test at least the Windows part in a VM one day. Please leave me a comment or issue with your experience!
+
+You can find the latest pre-packaged jar under the "bin" folder. 
+Btw. I picked 0.9 as the initial version number, because I had the feeling that roughly 90% of my bucket list is implemented.  
+Just download it to somewhere on your machine and then run:
+
+`java -jar MyAstroSessions-0.9.jar`
+
+Or maybe you just have to double-click on the Jar-file. It works in both ways in my Arch Linux.
+
+Alternatively - if you want to build it on your own - you need to have Maven (https://maven.apache.org/) installed on your machine, 
+then clone the whole repo, run:
+
+`mvn package`
+
+in the top folder - cross your fingers - and if you are lucky there should be a "MyAstroSessions-0.9.jar" in the "target" folder. 
+(I struggled a bit with the correct maven pom.xml but finally found a configuration that worked in my Linux setup.)
+
+On the first start (or actually at the first exit ;-) it should create some config files in <your-home-folder>/.config/myastrosessions. 
+This is how it works on Linux - I hope it does similar things on MacOS and Windows.
+
+## What else ...?
+The App is not intended to be a first class image viewer. 
+
+It produces some previews and can show standard images (jpeg, png, tiff etc.), but (at the moment) without any comfort functions like zooming etc. 
+
+Display of RAW DSLR images (NEF, CR2 ...) is not possible yet at all - any help on that topic is welcome! 
+
+The display of FITS images is slow and restricted to the first image layer (very likely the red channel for RGB images). 
+Instead, it offers ways to open images in your configured external viewer - just try the context menu in the trees.
+
+Credits for the fits-viewer part go to: https://swift.gsfc.nasa.gov/sdc/software/java/ 
+
+For the fits-metadata part I found the https://www.eso.org/~pgrosbol/fits_java/ to perform better.
+
+The exif-metadata part is using https://github.com/drewnoakes/metadata-extractor - thanks to Drew Noakes for this peace of SW!
