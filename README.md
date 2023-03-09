@@ -55,7 +55,7 @@ Such capture sessions may produce structures like this one:
 It does not matter how deep in the folder structure such a session folder is "hidden". 
 You may have your own structuring of all the top folders, e.g. by galaxies, nebulae etc. 
 As soon as there is a folder starting with the mentioned date prefix, it is treated as a capture session.
-The name of the direct parent folder is interpreted as the name of the Astro-Object that was the target of the session. 
+The name of the direct parent folder is interpreted as the name of the Astro-Object that was the target of that session. 
 
 Btw. if you use filters the lights part may also look like this 
 (any folder name that does not start with a "." or "_" directly below the lights folder is treated as a Filter):
@@ -121,3 +121,6 @@ Credits for the fits-viewer part go to: https://swift.gsfc.nasa.gov/sdc/software
 For the fits-metadata part I found the https://www.eso.org/~pgrosbol/fits_java/ to perform better.
 
 The exif-metadata part is using https://github.com/drewnoakes/metadata-extractor - thanks to Drew Noakes for this peace of SW!
+
+##Btw...
+The app comes with an english and a german localization. You can switch between them in the menu - it becomes active after a program restart.
