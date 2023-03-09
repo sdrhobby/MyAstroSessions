@@ -1,6 +1,7 @@
 # MyAstroSessions
 ## What is it about?
-I started this program to keep track of my personal astrophoto sessions. I started this hobby recently in 2021
+I started this program to keep track of my personal astrophoto sessions. I started this hobby recently in 2021.
+
 Each night under the sky produces lots of data, mainly - all the different types of captured images.
 Sometimes I manage to document everything during a capturing session, either on paper on in a textfile - sometimes not.
 
@@ -31,12 +32,12 @@ There are just two exceptions to this rule:
 - It allows to create a suitable structure for a new capture session in a place of your choice.
 - The app may produce a ".myastro.session" file in a session folder to store equipment-related information
 
-Apart from that it will save some general configuration stuff in a ".config/myastrosessions/" folder.
+Apart from that it will save some general configuration stuff in a ".config/myastrosessions/" folder under your user-home.
 
 ### The folder structure
 My workflow - and therefore the organization of the files on the disk - is inspired by Siril https://siril.org/ (one of the coolest Open Source projects on earth).
 
-My capture sessions may produce structures like this one:
+Such capture sessions may produce structures like this one:
 - Leo-Triplet;-)
     - **2023-03-08**-Capture session 1
       - lights
