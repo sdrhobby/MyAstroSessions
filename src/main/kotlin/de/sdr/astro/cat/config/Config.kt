@@ -8,6 +8,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileReader
 import java.io.FileWriter
+import java.io.InputStreamReader
 import java.util.*
 
 class Config private constructor() {
@@ -15,8 +16,8 @@ class Config private constructor() {
     var l10n: ResourceBundle = ResourceBundle.getBundle("l10n")
 
     private val configFileFolder =
-        File(System.getProperty("user.home") + File.separator + ".config" + File.separator + "astrocat")
-    private val configFileName = configFileFolder.path + File.separator + "astrocat.cfg"
+        File(System.getProperty("user.home") + File.separator + ".config" + File.separator + "myastrosessions")
+    private val configFileName = configFileFolder.path + File.separator + "myastrosessions.cfg"
     private val readmeTemplateName = configFileFolder.path + File.separator + "README.template"
     var scanFolder = ""
     val telescopes: MutableList<Telescope> = mutableListOf()
@@ -28,16 +29,18 @@ class Config private constructor() {
     var locationOnScreen = Point(0, 0)
     var frameSize = Dimension(1000, 660)
 
-    val unknownConfigLines : MutableList<String> = mutableListOf()
+    val unknownConfigLines: MutableList<String> = mutableListOf()
 
     companion object {
         private var instance: Config? = null
+
         @JvmStatic
         fun getInstance(): Config {
             if (instance == null) {
                 instance = Config()
                 instance?.switchLocale("en")
 
+                instance?.checkReadmeTemplate()
                 instance?.readConfigFile()
             }
             return instance!!
@@ -53,41 +56,41 @@ class Config private constructor() {
             println("config-folder created: " + getInstance().configFileFolder.mkdirs())
         }
         val fw = FileWriter(getInstance().configFileName)
-        fw.write("# last size of main windown\n")
-        fw.write("windowlocation=${locationOnScreen.x},${locationOnScreen.y} \n")
-        fw.write("windowsize=${frameSize.width}x${frameSize.height} \n")
+        fw.write("# last size of main windown" + System.lineSeparator())
+        fw.write("windowlocation=${locationOnScreen.x},${locationOnScreen.y} " + System.lineSeparator())
+        fw.write("windowsize=${frameSize.width}x${frameSize.height} " + System.lineSeparator())
 
-        fw.write("# default Astro-image folder\n")
-        fw.write("folder=" + getInstance().scanFolder + "\n")
+        fw.write("# default Astro-image folder" + System.lineSeparator())
+        fw.write("folder=" + getInstance().scanFolder + "" + System.lineSeparator())
         fw.write("autoscan=$autoscan")
 
-        fw.write("\n# Telescope configurations\n")
-        fw.write("ID; Name; FocalLength; Aperture; Keywords\n")
+        fw.write("\n# Telescope configurations" + System.lineSeparator())
+        fw.write("ID; Name; FocalLength; Aperture; Keywords" + System.lineSeparator())
         for (telescope in getInstance().telescopes) {
-            fw.write(telescope.toConfigLine() + "\n")
+            fw.write(telescope.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# Camera configurations\n")
-        fw.write("ID; Name; xRes; yRes; xPixel-Size; yPixel-Size; Keywords\n")
+        fw.write("\n# Camera configurations" + System.lineSeparator())
+        fw.write("ID; Name; xRes; yRes; xPixel-Size; yPixel-Size; Keywords" + System.lineSeparator())
         for (camera in getInstance().cameras) {
-            fw.write(camera.toConfigLine() + "\n")
+            fw.write(camera.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# Mounts configurations\n")
+        fw.write("\n# Mounts configurations" + System.lineSeparator())
         for (mount in getInstance().mounts) {
-            fw.write(mount.toConfigLine() + "\n")
+            fw.write(mount.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# Profiles configurations\n")
+        fw.write("\n# Profiles configurations" + System.lineSeparator())
         for (profile in getInstance().profiles) {
-            fw.write(profile.toConfigLine() + "\n")
+            fw.write(profile.toConfigLine() + "" + System.lineSeparator())
         }
-        fw.write("\n# overlay coordinates for AstroObjects\n")
+        fw.write("\n# overlay coordinates for AstroObjects" + System.lineSeparator())
         for (overlayInfo in getInstance().overlayInfos) {
-            fw.write(overlayInfo.toConfigLine() + "\n")
+            fw.write(overlayInfo.toConfigLine() + "" + System.lineSeparator())
         }
         // write "unknown" lines that have been read from orig config-file during startup
-        fw.write("\n# un-interpreted lines, copied from original config file\n")
-        fw.write("\n# maybe written by a new version of this software\n")
+        fw.write("\n# un-interpreted lines, copied from original config file" + System.lineSeparator())
+        fw.write("\n# maybe written by a new version of this software" + System.lineSeparator())
         for (line in unknownConfigLines) {
-            fw.write(line + "\n")
+            fw.write(line + "" + System.lineSeparator())
         }
 
         fw.flush()
@@ -96,45 +99,54 @@ class Config private constructor() {
     }
 
     fun readConfigFile() {
-        val fr = FileReader(getInstance().configFileName)
-        for (line in fr.readLines()) {
-            if (line.isEmpty() || line.startsWith('#'))
-                continue
-            if (line.startsWith("windowlocation")) {
-                try {
-                    val sub = line.substring(line.indexOf('=') + 1).trim()
-                    val arr = sub.split(',')
-                    locationOnScreen = Point(arr[0].toInt(), arr[1].toInt())
-                } catch (e: Exception) {
-                    println("invalid format for 'windowsize' in config-file: $line")
+        try {
+            val fr = FileReader(getInstance().configFileName)
+            for (line in fr.readLines()) {
+                if (line.isEmpty() || line.startsWith('#'))
+                    continue
+                if (line.startsWith("windowlocation")) {
+                    try {
+                        val sub = line.substring(line.indexOf('=') + 1).trim()
+                        val arr = sub.split(',')
+                        locationOnScreen = Point(arr[0].toInt(), arr[1].toInt())
+                    } catch (e: Exception) {
+                        println("invalid format for 'windowsize' in config-file: $line")
+                    }
+                } else if (line.startsWith("windowsize")) {
+                    try {
+                        val sub = line.substring(line.indexOf('=') + 1).trim()
+                        val arr = sub.split('x')
+                        frameSize = Dimension(arr[0].toInt(), arr[1].toInt())
+                    } catch (e: Exception) {
+                        println("invalid format for 'windowsize' in config-file: $line")
+                    }
+                } else if (line.startsWith("folder")) {
+                    scanFolder = line.substring(line.indexOf('=') + 1).trim()
+                } else if (line.startsWith("autoscan")) {
+                    autoscan = (line.substring(line.indexOf('=') + 1).trim()) == "true"
+                } else if (line.startsWith("telescope_")) {
+                    telescopes.add(Telescope.fromConfigLine(line))
+                } else if (line.startsWith("camera_")) {
+                    cameras.add(Camera.fromConfigLine(line))
+                } else if (line.startsWith("mount_")) {
+                    mounts.add(Mount.fromConfigLine(line))
+                } else if (line.startsWith("profile_")) {
+                    profiles.add(Profile.fromConfigLine(line))
+                } else if (line.startsWith("overlayinfo:")) {
+                    overlayInfos.add(OverlayInfo.fromConfigLine(line))
+                } else {
+                    unknownConfigLines.add(line)
                 }
-            } else if (line.startsWith("windowsize")) {
-                try {
-                    val sub = line.substring(line.indexOf('=') + 1).trim()
-                    val arr = sub.split('x')
-                    frameSize = Dimension(arr[0].toInt(), arr[1].toInt())
-                } catch (e: Exception) {
-                    println("invalid format for 'windowsize' in config-file: $line")
-                }
-            } else if (line.startsWith("folder")) {
-                scanFolder = line.substring(line.indexOf('=') + 1).trim()
-            } else if (line.startsWith("autoscan")) {
-                autoscan = (line.substring(line.indexOf('=') + 1).trim()) == "true"
-            } else if (line.startsWith("telescope_")) {
-                telescopes.add(Telescope.fromConfigLine(line))
-            } else if (line.startsWith("camera_")) {
-                cameras.add(Camera.fromConfigLine(line))
-            } else if (line.startsWith("mount_")) {
-                mounts.add(Mount.fromConfigLine(line))
-            } else if (line.startsWith("profile_")) {
-                profiles.add(Profile.fromConfigLine(line))
-            } else if (line.startsWith("overlayinfo:")) {
-                overlayInfos.add(OverlayInfo.fromConfigLine(line))
-            } else {
-                unknownConfigLines.add(line)
             }
+            fr.close()
+        } catch (x: FileNotFoundException) {
+            System.err.println(
+                String.format(
+                    "No config file found in %s. Maybe first start?",
+                    getInstance().configFileName
+                )
+            );
         }
-        fr.close()
     }
 
     fun readReadmeTemplate(): String {
@@ -142,22 +154,22 @@ class Config private constructor() {
         val reader = FileReader(readmeTemplateName)
         reader.forEachLine {
             sb.append(it)
-            sb.append("\n")
+            sb.append(System.lineSeparator())
         }
         return sb.toString()
     }
 
     fun saveSessionProfile(session: Session, sessionProfile: Profile) {
-        val fileName = session.path + File.separator + ".astrocat.session"
+        val fileName = session.path + File.separator + ".myastro.session"
         val fw = FileWriter(fileName)
-        fw.write(sessionProfile.toConfigLine() + "\n")
+        fw.write(sessionProfile.toConfigLine() + System.lineSeparator())
         fw.flush()
         fw.close()
         println("Configuration file $fileName updated!")
     }
 
     fun readSessionProfile(session: Session): Profile? {
-        val fileName = session.path + File.separator + ".astrocat.session"
+        val fileName = session.path + File.separator + ".myastro.session"
         var profile: Profile? = null
         try {
             val fr = FileReader(fileName)
@@ -209,6 +221,26 @@ class Config private constructor() {
             Locale.setDefault(newLocale)
             ResourceBundle.getBundle("l10n", newLocale)
         }
+    }
+
+    // TODO: use localized versions of README.template for that!
+    fun checkReadmeTemplate() {
+        try {
+            val readmeTemplateFile = File(configFileFolder.path + File.separator + "README.template")
+            if (!readmeTemplateFile.exists()) {
+                val input = InputStreamReader(this.javaClass.getResourceAsStream("/README.template"))
+                val output = FileWriter(configFileFolder.path + File.separator + "README.template")
+                for (line in input.readLines()) {
+                    output.write(line + System.lineSeparator())
+                }
+                output.flush()
+                output.close()
+                input.close()
+            }
+        } catch (x: Exception) {
+            System.err.println("Error while creating README.template in " + configFileFolder)
+        }
+
     }
 }
 
