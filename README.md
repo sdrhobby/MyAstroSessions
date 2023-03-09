@@ -92,7 +92,7 @@ The timeline view with an active Filter ("bode") and the details of one of the s
 The dialog to configure equipment and assign some keywords that can be looked up in the image metadata.
 
 ![grafik](https://user-images.githubusercontent.com/127389748/224139145-01c064ec-2bce-4a1d-bb94-ee6b1baa23e0.png)
-
+(Hmm - localization not fully done :-)
 
 ## The more technical stuff ...
 I implemented the app in a mix of Kotlin and Java. 
