@@ -21,21 +21,21 @@ open class PathObject(val path: String) {
 
     fun isCalibrationImage(): Boolean {
         // check if it is in one of the image folders of a session (biases, darks, flats)
-        return calibrationImageTypes.contains(getLastPathElement(1)) && Config.getInstance().imageExtensions().contains(extension)
+        return calibrationImageTypes.contains(getLastPathElement(1).lowercase()) && Config.getInstance().imageExtensions().contains(extension)
     }
     fun isLightImage(): Boolean {
         // check if the image is either directly in the lights folder or in a direct filter-subfolder (e.g. lights/R)
-        val lastPathSegment = getLastPathElement(1)
+        val lastPathSegment = getLastPathElement(1).lowercase()
         if (lastPathSegment.startsWith('.') || lastPathSegment.startsWith('_'))
             return false
-        val parentPathSegment = getLastPathElement(2)
+        val parentPathSegment = getLastPathElement(2).lowercase()
         return Config.getInstance().imageExtensions().contains(extension) &&
                 (Model.LIGHTS.equals(lastPathSegment) || Model.LIGHTS.equals(parentPathSegment))
     }
 
     fun isSessionResultImage(sessionName : String): Boolean {
         // check if it is directly in the session folder or in a "result" subfolder
-        val parentFolder = getLastPathElement(1)
+        val parentFolder = getLastPathElement(1).lowercase()
         return (Model.RESULT == parentFolder || sessionName == parentFolder) && Config.getInstance().imageExtensions().contains(extension)
     }
 
