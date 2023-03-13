@@ -26,7 +26,7 @@ open class PathObject(val path: String) {
 
     fun isCalibrationImage(): Boolean {
         // check if it is in one of the image folders of a session (biases, darks, flats)
-        return calibrationImageTypes.contains(getLastPathElement(1).lowercase()) && Config.getInstance().imageExtensions().contains(extension)
+        return calibrationImageTypes.contains(getLastPathElement(1).lowercase()) && Config.getInstance().capturedImageExtensions().contains(extension)
     }
     fun isLightImage(): Boolean {
         // check if the image is either directly in the lights folder or in a direct filter-subfolder (e.g. lights/R)
@@ -34,7 +34,7 @@ open class PathObject(val path: String) {
         if (lastPathSegment.startsWith('.') || lastPathSegment.startsWith('_'))
             return false
         val parentPathSegment = getLastPathElement(2).lowercase()
-        return Config.getInstance().imageExtensions().contains(extension) &&
+        return Config.getInstance().capturedImageExtensions().contains(extension) &&
                 (Model.LIGHTS.equals(lastPathSegment) || Model.LIGHTS.equals(parentPathSegment))
     }
 
@@ -47,8 +47,10 @@ open class PathObject(val path: String) {
 
     fun isSessionResultImage(sessionName : String): Boolean {
         // check if it is directly in the session folder or in a "result" subfolder
-        val parentFolder = getLastPathElement(1).lowercase()
-        return (Model.RESULT == parentFolder || sessionName == parentFolder) && Config.getInstance().imageExtensions().contains(extension)
+        val parentFolder = getLastPathElement(1)
+        val folderMatch = Model.RESULTS.equals(parentFolder) || sessionName.equals(parentFolder)
+        val extensionMatch = Config.getInstance().resultImageExtensions().contains(extension)
+        return folderMatch && extensionMatch
     }
 
     fun isFits(): Boolean {

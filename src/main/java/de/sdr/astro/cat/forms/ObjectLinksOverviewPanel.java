@@ -77,7 +77,6 @@ public class ObjectLinksOverviewPanel {
 
     private void setSessionResultImages(Session session) {
 
-
         List<Image> resultImages = session.getImageMap().get(Model.RESULTS);
         lblCaption.setText(String.format(Config.getInstance().getL10n().getString("objectoverview_caption.resultimages"), session.getName(), session.getAstroObjectName()));
 

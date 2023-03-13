@@ -187,7 +187,8 @@ public class NewSessionPanel {
         panelSessionInfo.add(spacer2, gbc);
         textFieldNamePart1 = new JTextField();
         textFieldNamePart1.setColumns(10);
-        textFieldNamePart1.setEditable(false);
+        textFieldNamePart1.setEditable(true);
+        textFieldNamePart1.setEnabled(true);
         textFieldNamePart1.setToolTipText("Session Namen beginnen mit dem Datum der Session");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
@@ -358,4 +359,5 @@ public class NewSessionPanel {
     public JComponent $$$getRootComponent$$$() {
         return topPanel;
     }
+
 }

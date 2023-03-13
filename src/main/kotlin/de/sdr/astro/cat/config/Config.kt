@@ -43,8 +43,11 @@ class Config private constructor() {
         }
     }
 
-    fun imageExtensions(): Array<String> {
-        return arrayOf("fit", "fits", "nef", "jpg")
+    fun capturedImageExtensions(): Array<String> {
+        return arrayOf("fit", "fits", "nef", "cr2")
+    }
+    fun resultImageExtensions(): Array<String> {
+        return arrayOf("jpg", "jpeg", "png", "tif", "tiff", "fit", "fits")
     }
 
     fun saveConfig() {

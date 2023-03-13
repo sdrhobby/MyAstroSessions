@@ -45,7 +45,8 @@
             </constraints>
             <properties>
               <columns value="10"/>
-              <editable value="false"/>
+              <editable value="true"/>
+              <enabled value="true"/>
               <toolTipText value="Session Namen beginnen mit dem Datum der Session"/>
             </properties>
           </component>
