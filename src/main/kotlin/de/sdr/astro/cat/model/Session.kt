@@ -17,6 +17,11 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
     val imageMap: MutableMap<String, MutableList<Image>> = mutableMapOf()
 
     init {
+        readSession()
+    }
+
+    fun readSession() {
+
         // initialize lists for diff. image types
         for (type in imageTypes) {
             imageMap[type] = mutableListOf()
@@ -55,6 +60,7 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
             println("    ${type}: ${images.size}")
         }
     }
+
 
     /**
      * categorize lights according to:
@@ -177,6 +183,22 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
             filterMap[lightImage.filter]?.add(lightImage)
         }
         return filterMap
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        if (!super.equals(other)) return false
+
+        other as Session
+
+        if (path != other.path) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return path.hashCode()
     }
 }
 

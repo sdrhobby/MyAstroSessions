@@ -93,7 +93,10 @@ public class NewSessionPanel {
         ((AstroObject) parentObject).getSessions().add(newSession);
 
         // add new Session object to the tree
-        PathObjectTreeNode parentNode = AstroCatGui.getInstance().getTreeNodeByNodeObject(parentObject);
+//        PathObjectTreeNode parentNode = AstroCatGui.getInstance().getTreeNodeByNodeObject(parentObject);
+        // TODO: do this for all trees
+        AstroCatGui gui = AstroCatGui.getInstance();
+        PathObjectTreeNode parentNode = gui.getNodeByNodeObject((PathObjectTreeNode) gui.getFolderTreeRoot(), parentObject);
         PathObjectTreeNode newSessionNode = AstroCatGui.getInstance().createSessionNode(newSession);
         AstroCatGui.getInstance().getFolderTreeModel().insertNodeInto(newSessionNode, parentNode, parentNode.getChildCount());
 

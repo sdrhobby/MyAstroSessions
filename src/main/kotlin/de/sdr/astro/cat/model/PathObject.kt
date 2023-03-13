@@ -14,6 +14,11 @@ open class PathObject(val path: String) {
     open val pureName : String
         get() = name.substring( 0, name.lastIndexOf("."))
 
+    open val folder: String
+        get() {
+            return path.substring(0, path.lastIndexOf('/'))
+        }
+
     fun getLastPathElement(i: Int = 0): String {
         val elements = path.split("/")
         return elements[elements.size - 1 - i]
@@ -31,6 +36,13 @@ open class PathObject(val path: String) {
         val parentPathSegment = getLastPathElement(2).lowercase()
         return Config.getInstance().imageExtensions().contains(extension) &&
                 (Model.LIGHTS.equals(lastPathSegment) || Model.LIGHTS.equals(parentPathSegment))
+    }
+
+    fun isFilter(): Boolean {
+        val parentPathSegment = getLastPathElement(1)
+        return (Model.LIGHTS.equals( parentPathSegment ) &&
+            ! name.startsWith('.') &&
+            ! name.startsWith('_'));
     }
 
     fun isSessionResultImage(sessionName : String): Boolean {

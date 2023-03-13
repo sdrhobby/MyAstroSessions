@@ -3,18 +3,13 @@ package de.sdr.astro.cat.forms;
 import de.sdr.astro.cat.config.Config;
 import de.sdr.astro.cat.forms.common.EditorPanel;
 import de.sdr.astro.cat.gui.*;
-import de.sdr.astro.cat.model.AstroObject;
+import de.sdr.astro.cat.model.*;
 import de.sdr.astro.cat.model.Image;
-import de.sdr.astro.cat.model.Model;
-import de.sdr.astro.cat.model.Session;
 import de.sdr.astro.cat.util.Util;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -371,7 +366,10 @@ public class AstroCatGui {
         lightFiltersMap.forEach((filter, imageList) -> {
             final PathObjectTreeNode activeNode;
             if (!filter.isEmpty()) {
-                activeNode = new PathObjectTreeNode(String.format("%s (%d)", filter, imageList.size()), Model.FILTER, session, true);
+                String filterPath = session.getPath() + File.separator + Model.LIGHTS + File.separator + filter;
+                // make the filter node a special one, holding also the real FS path of the Filter
+                Filter filterObject = new Filter(filterPath, filter, session);
+                activeNode = new FilterTreeNode(String.format("%s (%d)", filter, imageList.size()), Model.FILTER, filterObject, true, filterPath);
                 lightsNode.add(activeNode);
             } else {
                 activeNode = lightsNode;
@@ -385,13 +383,8 @@ public class AstroCatGui {
         });
     }
 
-
-    public PathObjectTreeNode getTreeNodeByNodeObject(Object nodeObject) {
-        return getNodeByUserObject((PathObjectTreeNode) getFolderTreeRoot(), nodeObject);
-    }
-
     public void selectTreeNodeByNodeObject(Object nodeObject) {
-        PathObjectTreeNode targetNode = getNodeByUserObject((PathObjectTreeNode) getFolderTreeRoot(), nodeObject);
+        PathObjectTreeNode targetNode = getNodeByNodeObject((PathObjectTreeNode) getFolderTreeRoot(), nodeObject);
         if (targetNode != null)
             navigateToNode(targetNode);
     }
@@ -403,15 +396,28 @@ public class AstroCatGui {
         treeSessionFolders.setSelectionPath(tpath);
     }
 
-    private PathObjectTreeNode getNodeByUserObject(PathObjectTreeNode startNode, Object nodeObject) {
+    public PathObjectTreeNode getNodeByNodeObject(DefaultMutableTreeNode startNode, Object nodeObject) {
         Enumeration<TreeNode> nodesEnum = startNode.breadthFirstEnumeration();
         while (nodesEnum.hasMoreElements()) {
-            PathObjectTreeNode node = (PathObjectTreeNode) nodesEnum.nextElement();
-            if (node.getNodeObject().equals(nodeObject)) {
-                return node;
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) nodesEnum.nextElement();
+            if (node instanceof PathObjectTreeNode && ((PathObjectTreeNode) node).getNodeObject().equals(nodeObject)) {
+                return (PathObjectTreeNode) node;
             }
         }
         return null;
+    }
+
+    public void removeNodeFromTreesByNodeObject(Object nodeObject) {
+        removeNodeFromTreeByNodeObject(getFolderTreeRoot(), getFolderTreeModel(), nodeObject);
+        removeNodeFromTreeByNodeObject(getTimelineTreeRoot(), getTimelineTreeModel(), nodeObject);
+        removeNodeFromTreeByNodeObject(getAstrobjectsTreeRoot(), getAstroObjectsTreeModel(), nodeObject);
+    }
+
+    private void removeNodeFromTreeByNodeObject(DefaultMutableTreeNode rootNode, DefaultTreeModel model, Object nodeObject) {
+        PathObjectTreeNode node = getNodeByNodeObject(rootNode, nodeObject);
+        DefaultMutableTreeNode parent = (DefaultMutableTreeNode) node.getParent();
+        parent.remove(node);
+        model.reload(parent);
     }
 
     private void expandNodesToLevel(JTree tree, DefaultMutableTreeNode node, int level) {
@@ -510,7 +516,8 @@ public class AstroCatGui {
                 // TODO: this is kind of a hack - take the filter from the first part of the node label
                 String f = pathNode.getUserObject().toString();
                 String filter = f.substring(0, f.indexOf('(') - 1);
-                panelImageMetadataList.initialize((Session) pathNode.getNodeObject(), Model.LIGHTS, filter);
+                Session session = ((Filter) pathNode.getNodeObject()).getSession();
+                panelImageMetadataList.initialize(session, Model.LIGHTS, filter);
                 panelContent.add(panelImageMetadataList.getTopPanel());
                 break;
             }
@@ -826,7 +833,7 @@ public class AstroCatGui {
             if (e.isPopupTrigger()) {
                 PathObjectTreeNode node = (PathObjectTreeNode) tree.getLastSelectedPathComponent();
                 if (node == null) return;
-                JPopupMenu pop = popupMenuHandler.createPopup(node.getNodeObject(), limitedFlag);
+                JPopupMenu pop = popupMenuHandler.createPopup(node, limitedFlag);
                 if (pop != null) {
                     System.out.printf("show popup for node: %s%n", node.getNodeObject());
                     pop.show(e.getComponent(), e.getX(), e.getY());

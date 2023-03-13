@@ -2,7 +2,7 @@ package de.sdr.astro.cat.gui
 
 import de.sdr.astro.cat.model.PathObject
 
-class PathObjectTreeNode// own constructor, allowing a Node Type and a custom object per node
+open class PathObjectTreeNode// own constructor, allowing a Node Type and a custom object per node
     (userObject: String, type: String, nodeObject: PathObject?, allowsChildren: Boolean = true) :
     TypedNode(userObject, type, allowsChildren) {
 
