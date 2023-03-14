@@ -5,7 +5,7 @@ import de.sdr.astro.cat.forms.AstroCatGui;
 import de.sdr.astro.cat.model.AstroObject;
 import de.sdr.astro.cat.model.Image;
 import de.sdr.astro.cat.util.BufferedImageFactory;
-import de.sdr.astro.cat.util.FitsImageViewerFactory;
+import de.sdr.astro.cat.util.FitsImageFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,13 +77,10 @@ public class ImageDisplayPanel {
     private JComponent getDisplayPanel(Image image) {
         JComponent displayPanel = null;
         if (image.isFits()) {
-            displayPanel = FitsImageViewerFactory.getFitsImageViewer(image, showGamma);
+//            displayPanel = FitsImageViewerFactory.getFitsImageViewer(image, showGamma);
+            displayPanel = new OverlayImageDisplayPanel(FitsImageFactory.getFitsImage(image.getPath()));
         } else if (image.isJpegTiffPng()) {
-            try {
-                displayPanel = new OverlayImageDisplayPanel(BufferedImageFactory.getImage(image.getPath()));
-            } catch (Exception x) {
-                System.err.println(x.getMessage());
-            }
+            displayPanel = new OverlayImageDisplayPanel(BufferedImageFactory.getImage(image.getPath()));
         } else {
             displayPanel = new JPanel();
             JLabel label = new JLabel(String.format("Image format '%s' is not supported yet! You may open it in an external viewer.", image.getExtension()));
