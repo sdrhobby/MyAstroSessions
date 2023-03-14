@@ -1,12 +1,8 @@
 package de.sdr.astro.cat.metadata
 
-import eap.fits.FitsImageData
-import eap.fits.InputStreamFitsFile
-import org.eso.fits.FitsFile
-import org.eso.fits.FitsHDUnit
-import org.eso.fits.FitsHeader
-import java.io.FileInputStream
-
+import nom.tam.fits.Fits
+import nom.tam.fits.Header
+import nom.tam.fits.ImageHDU
 
 class FitsData(val path: String) {
 
@@ -38,30 +34,25 @@ class FitsData(val path: String) {
         // TODO: coordinates
     )
 
-    private var fitsHeader : FitsHeader
+    private var fitsHeader : Header
 
     init {
-        val ffile = FitsFile(path) // open FITS file
-
-        val hdu: FitsHDUnit = ffile.getHDUnit(0)
+        val fitsFile: Fits = Fits(path)
+        val hdu = fitsFile.readHDU() as ImageHDU
         fitsHeader = hdu.header
     }
 
     fun dumpAllKeys() {
-        fitsHeader.keywords.forEach {
-            println(it)
-        }
+        fitsHeader.dumpHeader( System.out )
     }
 
     fun getAllMetadata() : List<List<String>> {
         val rows : MutableList<List<String>> = mutableListOf()
-        fitsHeader.keywords.forEach {
-
-            val row :MutableList<String> = mutableListOf()
-            val splitted = it.toString().split( "=", "/")
-            for ( element in splitted ) {
-                row.add(element.trim())
-            }
+        fitsHeader.iterator().forEach {
+            val row : MutableList<String> = mutableListOf()
+            row.add( it.key )
+            row.add( if (it.value != null) it.value else "")
+            row.add( if ( it.comment != null) it.comment else "")
             // ensure we have 3 elements
             while (row.size < 3)
                 row.add("")
@@ -71,39 +62,32 @@ class FitsData(val path: String) {
     }
 
     fun getCameraModel(): String? {
-        return fitsHeader.getKeyword(keys["camera"])?.string
+        return fitsHeader.getStringValue(keys["camera"])
     }
 
     fun getWidth(): Int {
-        return fitsHeader.getKeyword(keys["width"]).int
+        return fitsHeader.getIntValue(keys["width"])
     }
 
     fun getHeight(): Int {
-        return fitsHeader.getKeyword(keys["height"]).int
+        return fitsHeader.getIntValue(keys["height"])
     }
 
     fun getExposureTime(): Double? {
-        return fitsHeader.getKeyword(keys["exposure"])?.real
+        return fitsHeader.getDoubleValue(keys["exposure"])
     }
 
     fun getIso(): Int? {
-        return fitsHeader.getKeyword(keys["iso"])?.int
+        return fitsHeader.getIntValue(keys["iso"])
     }
     fun getGain(): Int? {
-        return fitsHeader.getKeyword(keys["gain"])?.int
+        return fitsHeader.getIntValue(keys["gain"])
     }
     fun getBias(): Int? {
-        return fitsHeader.getKeyword(keys["bias"])?.int
+        return fitsHeader.getIntValue(keys["bias"])
     }
 
     fun getCFAMode(): String? {
-        return fitsHeader.getKeyword(keys["cfa"])?.string
+        return fitsHeader.getStringValue(keys["cfa"])
     }
-
-    fun getFitsImage(): FitsImageData {
-        val fitsInputStream = InputStreamFitsFile(FileInputStream(path))
-        val fitsHDU = fitsInputStream.getHDU(0)
-        return fitsHDU.data as FitsImageData
-    }
-
 }
