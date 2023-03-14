@@ -92,11 +92,9 @@ public class ObjectLinksOverviewPanel {
                 if (session.hasResultImages()) {
                     // add a preview image with results from each session belonging to that object
                     for (Image image : resultImages) {
-                        if (image.isJpegTiffPng()) {
-                            ImageWithLinkPanel previewPanel = new ImageWithLinkPanel(image, String.format("%s : %s", session.getName(), image.getName()), image, new Dimension(200, 150));
-                            publish(previewPanel);
-                            panels.add(previewPanel);
-                        }
+                        ImageWithLinkPanel previewPanel = new ImageWithLinkPanel(image, String.format("%s : %s", session.getName(), image.getName()), image, new Dimension(200, 150));
+                        publish(previewPanel);
+                        panels.add(previewPanel);
                     }
                 }
                 return panels;
