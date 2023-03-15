@@ -11,7 +11,8 @@ class ImageMetadata (
     var exposure : Double?,
     val iso : Int?,
     val gain : Int?,
-    val bias : Int?
+    val bias : Int?,
+    val mount : String?
     // TODO: add coordinates from FITS
 
 )
@@ -79,7 +80,8 @@ fun ImageMetadata.Companion.fromExif( exif : ExifData ): ImageMetadata {
         exif.getExposureTime(),
         exif.getIso()?.toInt(),
         exif.getGain()?.toInt(),
-        exif.getBias()?.toInt()
+        exif.getBias()?.toInt(),
+        "" // there is no telescope data in EXIF
     )
     metadata.date = exif.getDate()!!
     metadata.time = exif.getTime()!!
@@ -96,7 +98,8 @@ fun ImageMetadata.Companion.fromFits( fits : FitsData): ImageMetadata {
         fits.getExposureTime(),
         fits.getIso(),
         fits.getGain(),
-        fits.getBias()
+        fits.getBias(),
+        fits.getMount()
     )
     metadata.fitsData = fits
     return metadata

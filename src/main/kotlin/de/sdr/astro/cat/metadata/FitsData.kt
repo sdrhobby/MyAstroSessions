@@ -16,7 +16,7 @@ class FitsData(val path: String) {
         "bias" to "BIAS",   // TODO: double-check
 
         "cfa" to "BAYERPAT",  // cfa = color filter array
-        "telescope" to "TELESCOP",
+        "mount" to "TELESCOP",
         "pixsizex" to "PIXSIZE1",
         "pixsizey" to "PIXSIZE2",
         "binx" to "XBINNING",
@@ -89,5 +89,9 @@ class FitsData(val path: String) {
 
     fun getCFAMode(): String? {
         return fitsHeader.getStringValue(keys["cfa"])
+    }
+
+    fun getMount(): String? {
+        return fitsHeader.getStringValue(keys["mount"])
     }
 }

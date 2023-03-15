@@ -108,6 +108,11 @@ public class SessionEquipmentPanel {
             if (!cameraStr.isEmpty())
                 // match this string against the keywords of the cameras in the Main Camera combo and select the one with the first match
                 selectComboItemByKeywordMatch(comboBoxMainCamera, cameraStr);
+
+            String mountStr = session.getMountEntryFromMetadata();
+            if (!mountStr.isEmpty())
+                // match this string against the keywords of the cameras in the Main Camera combo and select the one with the first match
+                selectComboItemByKeywordMatch(comboBoxMounts, mountStr);
         }
     }
 
@@ -152,15 +157,17 @@ public class SessionEquipmentPanel {
         if (keyword.isEmpty()) {
             combo.setSelectedItem("-");
         } else {
+            mainloop:
             for (int i = 1; i < combo.getItemCount(); i++) {
                 Equipment e = ((Equipment) combo.getItemAt(i));
-                String needle = e.getEquipmentKeywords().toLowerCase();
+                String[] needles = e.getEquipmentKeywords().toLowerCase().split(",");
                 String haystack = keyword.toLowerCase();
-                if (haystack.contains(needle)) {
-                    combo.setSelectedItem(e);
-                    break;
+                for (String needle : needles) {
+                    if (haystack.contains(needle.trim())) {
+                        combo.setSelectedItem(e);
+                        break mainloop;
+                    }
                 }
-
             }
         }
         combo.revalidate();

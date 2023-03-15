@@ -5,7 +5,7 @@ import de.sdr.astro.cat.metadata.*
 open class Image : PathObject {
 
     open var type = Model.deriveImageTypeFromParentFolderName( getLastPathElement(1) )
-    var metadata: ImageMetadata = ImageMetadata("", 0, 0, 0.0, 0, 0, 0)
+    var metadata: ImageMetadata = ImageMetadata("", 0, 0, 0.0, 0, 0, 0, "")
 
     constructor(path: String, imageType : String) : super(path) {
         type = imageType

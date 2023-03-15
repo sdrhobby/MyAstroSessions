@@ -119,6 +119,15 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         }
         return camera
     }
+    fun getMountEntryFromMetadata() : String  {
+        var mount = ""
+        // get first light image and check metadata
+        if (imageMap[Model.LIGHTS]?.size!! > 0) {
+            val image = imageMap[Model.LIGHTS]?.get(0)
+            mount = image?.metadata?.mount ?: ""
+        }
+        return mount
+    }
 
     fun hasResultImages() : Boolean {
         return ((imageMap[Model.RESULTS]?.size) ?: 0) > 0
