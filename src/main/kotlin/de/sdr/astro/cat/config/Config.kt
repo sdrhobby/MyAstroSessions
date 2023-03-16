@@ -1,6 +1,6 @@
 package de.sdr.astro.cat.config
 
-import de.sdr.astro.cat.model.OverlayInfo
+import de.sdr.astro.cat.model.overlays.SkymapLabel
 import de.sdr.astro.cat.model.Session
 import java.awt.Dimension
 import java.awt.Point
@@ -21,7 +21,7 @@ class Config private constructor() {
     val cameras: MutableList<Camera> = mutableListOf()
     val mounts: MutableList<Mount> = mutableListOf()
     val profiles: MutableList<Profile> = mutableListOf()
-    val overlayInfos: MutableList<OverlayInfo> = mutableListOf()
+    val overlayInfos: MutableList<SkymapLabel> = mutableListOf()
     var autoscan = false
     var locationOnScreen = Point(0, 0)
     var frameSize = Dimension(1000, 660)
@@ -147,7 +147,7 @@ class Config private constructor() {
                 } else if (line.startsWith("profile_")) {
                     profiles.add(Profile.fromConfigLine(line))
                 } else if (line.startsWith("overlayinfo:")) {
-                    overlayInfos.add(OverlayInfo.fromConfigLine(line))
+                    overlayInfos.add(SkymapLabel.fromConfigLine(line))
                 } else {
                     unknownConfigLines.add(line)
                 }
@@ -222,7 +222,7 @@ class Config private constructor() {
         this.frameSize = newSize
     }
 
-    fun updateOverlayInfos(newOverlayInfos: Collection<OverlayInfo>) {
+    fun updateOverlayInfos(newOverlayInfos: Collection<SkymapLabel>) {
         overlayInfos.clear()
         overlayInfos.addAll(newOverlayInfos)
     }

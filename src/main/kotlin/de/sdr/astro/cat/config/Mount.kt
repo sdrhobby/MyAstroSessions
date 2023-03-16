@@ -13,6 +13,10 @@ data class Mount(val id: Int, val name: String, val keywords: String) : Equipmen
     override fun getEquipmentId(): Int {
         return id
     }
+    override fun getEquipmentName(): String {
+        return name
+    }
+
     override fun getEquipmentKeywords(): String {
         return keywords
     }

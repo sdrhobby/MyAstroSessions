@@ -7,6 +7,7 @@ import de.sdr.astro.cat.config.Config
 import de.sdr.astro.cat.config.Config.Companion.getInstance
 import de.sdr.astro.cat.forms.AstroCatGui
 import de.sdr.astro.cat.forms.ConfigPanel
+import de.sdr.astro.cat.forms.ImageExportPanel
 import java.awt.Color
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
@@ -17,6 +18,7 @@ import kotlin.system.exitProcess
 
 class MainFrame : JFrame() {
 
+    var exporterDialog: JDialog? = null
 
     init {
 
@@ -48,7 +50,7 @@ class MainFrame : JFrame() {
         UIManager.put("ComboBox.disabledBackground", Color(212, 212, 210))
         UIManager.put("ComboBox.disabledForeground", Color.BLACK)
 
-        UIManager.getDefaults().keys.forEach{
+        UIManager.getDefaults().keys.forEach {
             val fr = UIManager.get(it)
             if (fr != null && fr is FontUIResource) {
                 val f = FontUIResource(fr.family, fr.style, 14)
@@ -73,6 +75,11 @@ class MainFrame : JFrame() {
             AstroCatGui.getInstance().showSkymapDialog(null)
         }
 
+        val menuItemImageExporter = JMenuItem(Config.getInstance().l10n.getString("menu_show.imageexporter"))
+        menuItemImageExporter.addActionListener {
+            showImageExporterDialog()
+        }
+
         val menuItemExit = JMenuItem(Config.getInstance().l10n.getString("menu_end"))
         menuItemExit.addActionListener {
             println(this.location)
@@ -83,6 +90,7 @@ class MainFrame : JFrame() {
 
         menuFile.add(menuItemEquipment)
         menuFile.add(menuItemSkymap)
+        menuFile.add(menuItemImageExporter)
         menuFile.addSeparator()
         menuFile.add(menuItemExit)
 
@@ -112,15 +120,15 @@ class MainFrame : JFrame() {
         menuItemLangDe.addActionListener {
             Config.getInstance().switchLocale("de", true)
         }
-        if ( "de".equals( Config.getInstance().locale ) )
+        if ("de".equals(Config.getInstance().locale))
             menuItemLangDe.isEnabled = false
 
         val menuItemLangEn = JMenuItem("English")
         menuItemLangEn.setMnemonic('E')
         menuItemLangEn.addActionListener {
-            Config.getInstance().switchLocale("en", true )
+            Config.getInstance().switchLocale("en", true)
         }
-        if ( "en".equals( Config.getInstance().locale ) || Config.getInstance().locale.isEmpty() )
+        if ("en".equals(Config.getInstance().locale) || Config.getInstance().locale.isEmpty())
             menuItemLangEn.isEnabled = false
 
         val langMenu = JMenu(Config.getInstance().l10n.getString("menu_language"))
@@ -142,6 +150,17 @@ class MainFrame : JFrame() {
         equipmentDialog.pack()
         equipmentDialog.setLocationRelativeTo(null)
         equipmentDialog.isVisible = true
+    }
+
+    private fun showImageExporterDialog() {
+        if (exporterDialog == null) {
+            exporterDialog = JDialog(this)
+            exporterDialog!!.title = Config.getInstance().l10n.getString("exporter_title")
+            exporterDialog!!.contentPane = ImageExportPanel().topPanel
+            exporterDialog!!.pack()
+            exporterDialog!!.setLocationRelativeTo(null)
+        }
+        exporterDialog!!.isVisible = true
     }
 }
 

@@ -1,5 +1,7 @@
 package de.sdr.astro.cat.forms;
 
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import de.sdr.astro.cat.config.Config;
 
 import javax.swing.*;
@@ -52,13 +54,13 @@ public class ConfigPanel {
      */
     private void $$$setupUI$$$() {
         topPanel = new JPanel();
-        topPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        topPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         topPanel.setMinimumSize(new Dimension(-1, -1));
         topPanel.setPreferredSize(new Dimension(800, 480));
         tabbedPaneEquipment = new JTabbedPane();
         tabbedPaneEquipment.setName("");
         tabbedPaneEquipment.setTabPlacement(1);
-        topPanel.add(tabbedPaneEquipment, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        topPanel.add(tabbedPaneEquipment, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
     }
 
     /**
@@ -67,4 +69,5 @@ public class ConfigPanel {
     public JComponent $$$getRootComponent$$$() {
         return topPanel;
     }
+
 }

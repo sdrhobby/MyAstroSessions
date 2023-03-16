@@ -13,6 +13,11 @@ data class Telescope(val id: Int, val name : String, val focalLength: Int, val a
     override fun getEquipmentId(): Int {
         return id
     }
+
+    override fun getEquipmentName(): String {
+        return name
+    }
+
     override fun getEquipmentKeywords(): String {
         return keywords
     }

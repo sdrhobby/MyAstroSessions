@@ -20,8 +20,8 @@ public class ImageWithLinkPanel extends JPanel {
         setPreferredSize(size);
         if (image != null) {
             ImageDisplayPanel imageDisplayPanel = new ImageDisplayPanel();
-            imageDisplayPanel.getTopPanel().addMouseListener( new NavigationMouseAdapter(targetObject) );
-            add(imageDisplayPanel.getTopPanel(), BorderLayout.CENTER);
+            imageDisplayPanel.addMouseListener( new NavigationMouseAdapter(targetObject) );
+            add(imageDisplayPanel, BorderLayout.CENTER);
             imageDisplayPanel.setImage(image);
         } else {
             JLabel label = new JLabel(Config.getInstance().getL10n().getString("sessioninfo_no.preview"));

@@ -21,9 +21,9 @@ public class ImagePanel {
     }
 
     public ImagePanel() {
-        imageDisplayPanel = new ImageDisplayPanel(true);
+        imageDisplayPanel = new ImageDisplayPanel();
         imageMetadataPanel = new ImageMetadataPanel();
-        tabbedPaneImage.addTab("ImageDisplay", imageDisplayPanel.getTopPanel());
+        tabbedPaneImage.addTab("ImageDisplay", imageDisplayPanel);
         tabbedPaneImage.addTab(Config.getInstance().getL10n().getString("imagepanel_metadata"), imageMetadataPanel.getTopPanel());
 
         tabbedPaneImage.addChangeListener(changeEvent -> {

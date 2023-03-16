@@ -52,10 +52,10 @@ class BufferedImageFactory {
         val rowOrder = hdu.header.getIntValue("ROWORDER")
         val bottomUP = "BOTTOM-UP".equals(rowOrder)
 
-        println(hdu.size)
+//        println(hdu.size)
         hdu.info(System.out)
-        println("Bits per pixel: $bitPix")
-        println(String.format("image width: %d  height: %d ", w, h))
+//        println("Bits per pixel: $bitPix")
+//        println(String.format("image width: %d  height: %d ", w, h))
 
         val imageData = hdu.data
         val o = imageData.data

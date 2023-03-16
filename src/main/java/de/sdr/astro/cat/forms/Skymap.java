@@ -5,7 +5,8 @@ import de.sdr.astro.cat.forms.common.*;
 
 import de.sdr.astro.cat.model.AstroObject;
 import de.sdr.astro.cat.model.Model;
-import de.sdr.astro.cat.model.OverlayInfo;
+import de.sdr.astro.cat.model.overlays.Overlay;
+import de.sdr.astro.cat.model.overlays.SkymapLabel;
 import de.sdr.astro.cat.model.PointDouble;
 
 import javax.imageio.ImageIO;
@@ -14,10 +15,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 /***
  * Skymap displays a panel with a screenshot of the nightsky.
@@ -39,7 +38,7 @@ public class Skymap {
     private JDialog parentDialog;
     private boolean editMode = false;
     private boolean changed = false;
-    private Map<String, OverlayInfo> mapOverlayInfos = new HashMap();
+    private Map<String, SkymapLabel> mapOverlayInfos = new HashMap();
 
     private OverlayImageDisplayPanel imageDisplayPanel;
     private Dimension imageSize;
@@ -84,8 +83,8 @@ public class Skymap {
         }
 
         // get known OverlayInfos from the Configuration and transfer it to our internal map-structure
-        List<OverlayInfo> oiList = Config.getInstance().getOverlayInfos();
-        for (OverlayInfo oi : oiList) {
+        List<SkymapLabel> oiList = Config.getInstance().getOverlayInfos();
+        for (SkymapLabel oi : oiList) {
             mapOverlayInfos.put(oi.getLabel(), oi);
         }
 
@@ -110,7 +109,7 @@ public class Skymap {
                     toggleEditMode();
                     PointDouble p = imageDisplayPanel.translatePanelToRelativeImageCoord(e.getPoint());
                     String label = comboBoxAstroObject.getSelectedItem().toString();
-                    OverlayInfo oi = new OverlayInfo(label, p);
+                    SkymapLabel oi = new SkymapLabel(label, p, Color.YELLOW);
                     imageDisplayPanel.addOverlay(oi);
                     mapOverlayInfos.put(label, oi);
                     changed = true;
@@ -126,7 +125,7 @@ public class Skymap {
                     imageDisplayPanel.clearOverlays();
                     String aoName = ((String) itemEvent.getItem());
                     // check if we have an overlay info for that AstroObject name
-                    OverlayInfo oi = mapOverlayInfos.get(aoName);
+                    SkymapLabel oi = mapOverlayInfos.get(aoName);
                     if (oi != null) {
                         // if yes, show it as overlay (for now, we are only showing one object at a time)
                         imageDisplayPanel.addOverlay(oi);
@@ -148,7 +147,8 @@ public class Skymap {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
                 if (checkBoxShowAll.isSelected()) {
-                    imageDisplayPanel.setOverays(mapOverlayInfos.values());
+                    // dirty cast to Collection<Overlay>
+                    imageDisplayPanel.setOverlays((Collection<Overlay>) (Object) mapOverlayInfos.values());
                 } else {
                     // remove all
                     imageDisplayPanel.clearOverlays();
@@ -387,4 +387,5 @@ public class Skymap {
     public JComponent $$$getRootComponent$$$() {
         return topPanel;
     }
+
 }

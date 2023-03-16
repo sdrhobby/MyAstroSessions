@@ -15,6 +15,10 @@ data class Camera(val id: Int, val name : String, val xRes: Int, val yRes : Int,
         return id
     }
 
+    override fun getEquipmentName(): String {
+        return name
+    }
+
     override fun getEquipmentKeywords(): String {
         return keywords
     }

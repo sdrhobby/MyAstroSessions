@@ -9,7 +9,6 @@ data class Profile(val name: String, val mainTelescopeId: Int, val mainCameraId:
         return name
     }
 
-
     companion object {
         @JvmStatic
         fun fromConfigLine(line: String): Profile {
@@ -27,4 +26,23 @@ data class Profile(val name: String, val mainTelescopeId: Int, val mainCameraId:
         }
     }
 
+    fun getCameraById( id : Int) : Camera?{
+        return getEquipmentById( Config.getInstance().cameras as List<Equipment>, id) as Camera
+    }
+
+    fun getTelescopeById( id : Int) : Telescope?{
+        return getEquipmentById( Config.getInstance().telescopes as List<Equipment>, id) as Telescope
+    }
+
+   fun getMountById( id : Int) : Mount?{
+        return getEquipmentById( Config.getInstance().mounts as List<Equipment>, id) as Mount
+    }
+
+    private fun getEquipmentById( list : List<Equipment>, id : Int ) : Equipment? {
+        list.forEach{
+            if (it.getEquipmentId() == id )
+                return it
+        }
+        return null
+    }
 }
