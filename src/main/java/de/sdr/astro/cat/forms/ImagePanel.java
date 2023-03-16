@@ -29,7 +29,7 @@ public class ImagePanel {
         tabbedPaneImage.addChangeListener(changeEvent -> {
             switch (tabbedPaneImage.getSelectedIndex()) {
                 case 0:
-                    imageDisplayPanel.setImage(image);
+                    imageDisplayPanel.setImage(image.getPath());
                     break;
                 case 1:
                     imageMetadataPanel.setImage(image);
@@ -46,7 +46,7 @@ public class ImagePanel {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() {
-                imageDisplayPanel.setImage(image);
+                imageDisplayPanel.setImage(image.getPath());
                 imageMetadataPanel.setImage(image);
                 return null;
             }

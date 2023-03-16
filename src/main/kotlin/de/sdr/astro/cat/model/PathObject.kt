@@ -1,6 +1,7 @@
 package de.sdr.astro.cat.model
 
 import de.sdr.astro.cat.config.Config
+import de.sdr.astro.cat.util.Util
 
 open class PathObject(val path: String) {
 
@@ -54,10 +55,12 @@ open class PathObject(val path: String) {
     }
 
     fun isFits(): Boolean {
-        return arrayOf("fit", "fits").contains(extension.lowercase())
+        return Util.isFits(name)
+//        return arrayOf("fit", "fits").contains(extension.lowercase())
     }
     fun isJpegTiffPng(): Boolean {
-        return arrayOf("jpg", "jpeg", "tiff", "tif", "png").contains(extension.lowercase())
+        return Util.isJpegTiffPng(name)
+//        return arrayOf("jpg", "jpeg", "tiff", "tif", "png").contains(extension.lowercase())
     }
 
     fun isRaw() : Boolean {

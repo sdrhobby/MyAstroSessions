@@ -1,6 +1,6 @@
 package de.sdr.astro.cat.config
 
-import de.sdr.astro.cat.model.overlays.SkymapLabel
+import de.sdr.astro.cat.gui.overlays.SkymapLabel
 import de.sdr.astro.cat.model.Session
 import java.awt.Dimension
 import java.awt.Point

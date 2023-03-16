@@ -1,4 +1,4 @@
-package de.sdr.astro.cat.model.overlays
+package de.sdr.astro.cat.gui.overlays
 
 import de.sdr.astro.cat.model.PointDouble
 import java.awt.Color
@@ -12,12 +12,11 @@ class RectangleOverlay( point : PointDouble, val point2 : PointDouble, color: Co
      * paint this overlay using the given Graphics object
      * Since the own point coordinates are only relative to the size of the container, the dimension of the container is expected
      * @param g: Graphics ... the Graphics object to be used for painting
-     * @param xOff, yOff ... potential offsets to apply for pointing actions
      * @param cDim: Dimension ... the current dimension of the object to paint into
      */
-    override  fun paint(g : Graphics, cDim : Dimension, xOff: Int, yOff: Int ) {
-        val p : Point = translateRelToContainerCoords( point, xOff, yOff, cDim)
-        val p2 : Point = translateRelToContainerCoords( point2, xOff, yOff, cDim)
+    override  fun paint(g : Graphics, cDim : Dimension ) {
+        val p : Point = translateRelToContainerCoords( point, cDim)
+        val p2 : Point = translateRelToContainerCoords( point2, cDim)
         g.setColor( color )
         g.drawRect(p.x, p.y, p2.x - p.x, p2.y - p.y)
     }

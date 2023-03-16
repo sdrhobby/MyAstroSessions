@@ -1,4 +1,4 @@
-package de.sdr.astro.cat.model.overlays
+package de.sdr.astro.cat.gui.overlays
 
 import de.sdr.astro.cat.model.PointDouble
 import java.awt.*
@@ -28,8 +28,8 @@ class SkymapLabel(val label: String, point: PointDouble, color: Color) : Overlay
      * @param cDim: Dimension ... the current dimension of the object to paint into
      */
 
-    override fun paint(g: Graphics, cDim: Dimension, xOff: Int, yOff: Int) {
-        val p : Point = translateRelToContainerCoords( point, xOff, yOff, cDim)
+    override fun paint(g: Graphics, cDim: Dimension ) {
+        val p : Point = translateRelToContainerCoords( point, cDim)
         val g2 = g as Graphics2D
         g2.setColor(color);
         g2.setStroke( BasicStroke(3F));

@@ -22,7 +22,7 @@ public class ImageWithLinkPanel extends JPanel {
             ImageDisplayPanel imageDisplayPanel = new ImageDisplayPanel();
             imageDisplayPanel.addMouseListener( new NavigationMouseAdapter(targetObject) );
             add(imageDisplayPanel, BorderLayout.CENTER);
-            imageDisplayPanel.setImage(image);
+            imageDisplayPanel.setImage(image.getPath());
         } else {
             JLabel label = new JLabel(Config.getInstance().getL10n().getString("sessioninfo_no.preview"));
             label.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));

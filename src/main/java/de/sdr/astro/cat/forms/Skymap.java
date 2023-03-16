@@ -5,8 +5,8 @@ import de.sdr.astro.cat.forms.common.*;
 
 import de.sdr.astro.cat.model.AstroObject;
 import de.sdr.astro.cat.model.Model;
-import de.sdr.astro.cat.model.overlays.Overlay;
-import de.sdr.astro.cat.model.overlays.SkymapLabel;
+import de.sdr.astro.cat.gui.overlays.Overlay;
+import de.sdr.astro.cat.gui.overlays.SkymapLabel;
 import de.sdr.astro.cat.model.PointDouble;
 
 import javax.imageio.ImageIO;
@@ -40,7 +40,7 @@ public class Skymap {
     private boolean changed = false;
     private Map<String, SkymapLabel> mapOverlayInfos = new HashMap();
 
-    private OverlayImageDisplayPanel imageDisplayPanel;
+    private ImageDisplayPanel imageDisplayPanel;
     private Dimension imageSize;
 
     public JPanel getTopPanel() {
@@ -76,7 +76,7 @@ public class Skymap {
         try {
             BufferedImage img = ImageIO.read(this.getClass().getResourceAsStream(SKYMAP_IMAGE));
             imageSize = new Dimension(img.getWidth(), img.getHeight());
-            imageDisplayPanel = new OverlayImageDisplayPanel(img);
+            imageDisplayPanel = new ImageDisplayPanel(img);
             panelMap.add(imageDisplayPanel, BorderLayout.CENTER);
         } catch (Exception x) {
             System.err.println(x.getMessage());
@@ -122,8 +122,8 @@ public class Skymap {
             public void itemStateChanged(ItemEvent itemEvent) {
                 System.out.println("AstroObject selection changed: " + itemEvent.getItem());
                 if (comboBoxAstroObject.getItemCount() > 0) {
-                    imageDisplayPanel.clearOverlays();
                     String aoName = ((String) itemEvent.getItem());
+                    imageDisplayPanel.clearOverlays();
                     // check if we have an overlay info for that AstroObject name
                     SkymapLabel oi = mapOverlayInfos.get(aoName);
                     if (oi != null) {
@@ -148,7 +148,7 @@ public class Skymap {
             public void itemStateChanged(ItemEvent itemEvent) {
                 if (checkBoxShowAll.isSelected()) {
                     // dirty cast to Collection<Overlay>
-                    imageDisplayPanel.setOverlays((Collection<Overlay>) (Object) mapOverlayInfos.values());
+                    imageDisplayPanel.replaceOverlays((Collection<Overlay>) (Object) mapOverlayInfos.values());
                 } else {
                     // remove all
                     imageDisplayPanel.clearOverlays();

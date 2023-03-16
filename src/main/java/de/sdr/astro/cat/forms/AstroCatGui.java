@@ -54,6 +54,8 @@ public class AstroCatGui {
 
     private JFrame mainFrame;
 
+    private Session lastSelectedSession;
+
     public JFrame getMainFrame() {
         return mainFrame;
     }
@@ -126,6 +128,10 @@ public class AstroCatGui {
                 filterTree(tfFilter.getText());
             }
         });
+    }
+
+    public Session getLastSelectedSession() {
+        return lastSelectedSession;
     }
 
     private void filterTree(String filterText) {
@@ -500,7 +506,9 @@ public class AstroCatGui {
             }
             // details for overall session
             case Model.SESSION: {
-                panelContent.add(new SessionInfoPanel((Session) pathNode.getNodeObject()).getTopPanel());
+                Session selectedSession = (Session) pathNode.getNodeObject();
+                lastSelectedSession = selectedSession;
+                panelContent.add(new SessionInfoPanel(selectedSession).getTopPanel());
                 break;
             }
             // details for lists of images

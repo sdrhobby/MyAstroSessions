@@ -93,6 +93,18 @@ class Util {
         fun getMonthName(m: Int): String {
             return months[m - 1]
         }
+
+        @JvmStatic
+        fun isFits(path : String): Boolean {
+            val ext = path.substring(path.lastIndexOf('.') + 1)
+            return arrayOf("fit", "fits").contains(ext.lowercase())
+        }
+        @JvmStatic
+        fun isJpegTiffPng(path: String): Boolean {
+            val ext = path.substring(path.lastIndexOf('.') + 1)
+            return arrayOf("jpg", "jpeg", "tiff", "tif", "png").contains(ext.lowercase())
+        }
+
     }
 }
 

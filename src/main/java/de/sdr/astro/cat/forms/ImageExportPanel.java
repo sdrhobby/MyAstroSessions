@@ -3,14 +3,15 @@ package de.sdr.astro.cat.forms;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import de.sdr.astro.cat.config.Camera;
 import de.sdr.astro.cat.config.Config;
-import de.sdr.astro.cat.config.Equipment;
 import de.sdr.astro.cat.config.Profile;
 import de.sdr.astro.cat.forms.common.ImageDisplayPanel;
 import de.sdr.astro.cat.model.Image;
 import de.sdr.astro.cat.model.Model;
+import de.sdr.astro.cat.model.PointDouble;
 import de.sdr.astro.cat.model.Session;
+import de.sdr.astro.cat.gui.overlays.Overlay;
+import de.sdr.astro.cat.gui.overlays.TextOverlay;
 import de.sdr.astro.cat.util.Util;
 
 import javax.swing.*;
@@ -19,12 +20,10 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -63,12 +62,23 @@ public class ImageExportPanel {
     private int imageIndex = 0;
     private String lastFolder = Config.getInstance().getScanFolder();
 
+    private PointDouble overlayPosition = new PointDouble(75, 75);
+    private int overlayFontSize;
+    private Color overlayColor = Color.LIGHT_GRAY;
+    private TextOverlay overlayObject = new TextOverlay("", overlayPosition, overlayColor);
+    ;
+    private TextOverlay overlayObserver = new TextOverlay("", overlayPosition.add(0, 4), overlayColor);
+    private TextOverlay overlayTelescope = new TextOverlay("", overlayPosition.add(0, 8), overlayColor);
+    private TextOverlay overlayCamera = new TextOverlay("", overlayPosition.add(0, 12), overlayColor);
+    private TextOverlay overlayExposure = new TextOverlay("", overlayPosition.add(0, 16), overlayColor);
+    private TextOverlay overlayFilter = new TextOverlay("", overlayPosition.add(0, 20), overlayColor);
+    ;
+
     public JPanel getTopPanel() {
         return topPanel;
     }
 
     public ImageExportPanel() {
-        initialize(null);
         panelImage.add(imageDisplayPanel, BorderLayout.CENTER);
         btnSelect.addActionListener(new ActionListener() {
             @Override
@@ -119,9 +129,34 @@ public class ImageExportPanel {
         checkObserver.addItemListener(itemEvent -> {
             tfObserver.setEnabled(!checkObserver.isSelected());
         });
+        addKeyListener(tfObserver, overlayObserver);
+        addKeyListener(tfObject, overlayObject);
+        addKeyListener(tfCamera, overlayCamera);
+        addKeyListener(tfTelescope, overlayTelescope);
+        addKeyListener(tfExposure, overlayExposure);
+        addKeyListener(tfFilter, overlayFilter);
     }
 
-    public void initialize(Session session) {
+    private void addKeyListener(JTextField tf, TextOverlay overlay) {
+        tf.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                System.out.println("key released: " + tf.getText());
+                overlay.setText(tf.getText());
+                imageDisplayPanel.overlaysChanged();
+            }
+        });
+    }
+
+    private void handleSessionSelection(String path) {
+        try {
+            setSession(new Session(path));
+        } catch (Exception x) {
+            System.err.println("invalid session selected: " + path);
+        }
+    }
+
+    public void setSession(Session session) {
         if (session != null) {
             lblSessionName.setText(session.getAstroObjectName() + " - Session: " + session.getName());
             this.session = session;
@@ -131,22 +166,40 @@ public class ImageExportPanel {
         }
     }
 
-    private void handleSessionSelection(String path) {
-        try {
-            initialize(new Session(path));
-        } catch (Exception x) {
-            System.err.println("invalid session selected: " + path);
-        }
-    }
 
     private void fillSessionEquipment() {
         Profile profile = Config.getInstance().readSessionProfile(session);
         if (profile != null) {
-            tfCamera.setText(profile.getCameraById(profile.getMainCameraId()).getName());
-            tfTelescope.setText(profile.getTelescopeById(profile.getMainTelescopeId()).getName());
-            tfExposure.setText(Util.formatExposure(session.totalCaptureTime(Model.LIGHTS)) + " min");
             tfObject.setText(session.getAstroObjectName());
+            tfObserver.setText("");
+            tfTelescope.setText(profile.getTelescopeById(profile.getMainTelescopeId()).getName());
+            tfCamera.setText(profile.getCameraById(profile.getMainCameraId()).getName());
+            tfExposure.setText(Util.formatExposure(session.totalCaptureTime(Model.LIGHTS)) + " min");
+            tfFilter.setText("<filter>");
         }
+        // initial drawing of the overlays
+        initOverlays();
+    }
+
+    private void initOverlays() {
+
+        overlayObject.setText(tfObject.getText());
+        overlayObserver.setText(tfObserver.getText());
+        overlayTelescope.setText(tfTelescope.getText());
+        overlayCamera.setText(tfCamera.getText());
+        overlayExposure.setText(tfExposure.getText());
+        overlayFilter.setText(tfFilter.getText());
+
+        List<Overlay> overlayList = new ArrayList<>();
+
+        overlayList.add(overlayObserver);
+        overlayList.add(overlayObject);
+        overlayList.add(overlayCamera);
+        overlayList.add(overlayTelescope);
+        overlayList.add(overlayExposure);
+        overlayList.add(overlayFilter);
+
+        imageDisplayPanel.replaceOverlays(overlayList);
     }
 
     private void setImage(int index) {
@@ -161,7 +214,7 @@ public class ImageExportPanel {
         imageIndex = index;
         Image image = imageList.get(imageIndex);
 
-        imageDisplayPanel.setImage(image);
+        imageDisplayPanel.setImage(image.getPath());
 
         String num = String.format(" (%d / %d)", imageIndex + 1, imageList.size());
         lblImageName.setText(image.getName() + num);
@@ -197,27 +250,31 @@ public class ImageExportPanel {
         splitPaneMain.setLeftComponent(panelMain);
         panelMain.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         panelNavigation = new JPanel();
-        panelNavigation.setLayout(new GridLayoutManager(2, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panelNavigation.setLayout(new GridLayoutManager(3, 5, new Insets(0, 0, 0, 0), -1, -1));
         panelMain.add(panelNavigation, BorderLayout.NORTH);
         lblImageName = new JLabel();
         Font lblImageNameFont = this.$$$getFont$$$(null, Font.BOLD, -1, lblImageName.getFont());
         if (lblImageNameFont != null) lblImageName.setFont(lblImageNameFont);
         lblImageName.setText("");
-        panelNavigation.add(lblImageName, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, -1), new Dimension(200, -1), null, 0, false));
-        btnNext = new JButton();
-        btnNext.setText("=>");
-        panelNavigation.add(btnNext, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelNavigation.add(lblImageName, new GridConstraints(1, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(100, -1), new Dimension(200, -1), null, 0, false));
         lblSessionName = new JLabel();
         Font lblSessionNameFont = this.$$$getFont$$$(null, Font.BOLD, -1, lblSessionName.getFont());
         if (lblSessionNameFont != null) lblSessionName.setFont(lblSessionNameFont);
         lblSessionName.setText("");
-        panelNavigation.add(lblSessionName, new GridConstraints(0, 0, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelNavigation.add(lblSessionName, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnNext = new JButton();
+        btnNext.setText("=>");
+        panelNavigation.add(btnNext, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnPrev = new JButton();
         btnPrev.setText("<=");
-        panelNavigation.add(btnPrev, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelNavigation.add(btnPrev, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panelImage = new JPanel();
         panelImage.setLayout(new BorderLayout(0, 0));
         panelMain.add(panelImage, BorderLayout.CENTER);
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setPreferredSize(new Dimension(24, 16));
+        panelImage.add(panel1, BorderLayout.SOUTH);
         panelInteractions = new JPanel();
         panelInteractions.setLayout(new GridBagLayout());
         panelInteractions.setPreferredSize(new Dimension(250, 24));
@@ -273,8 +330,8 @@ public class ImageExportPanel {
         panelElements.add(spacer2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panelElements.add(spacer3, new GridConstraints(0, 2, 9, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -282,7 +339,7 @@ public class ImageExportPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        panelInteractions.add(panel1, gbc);
+        panelInteractions.add(panel2, gbc);
     }
 
     /**
