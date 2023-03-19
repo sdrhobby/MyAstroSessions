@@ -154,8 +154,12 @@ class Session(path: String) : PathObject(path), Comparable<Session> {
             }
             // find similarity based on Levenstein distance
             // in case of same similarities the one with the longest name will win (very likely an edited version with a suffix)
-            // therefore adding here just the length of the pure image-name
-            val similarity = Util.findSimilarity(image.pureName, astroObjectName) + image.pureName.length
+            // therefore adding here just a small influence of the length of the pure image-name. This fraction shall differentiate
+            // images with same low rating
+            val similarity = Util.findSimilarity(image.pureName, astroObjectName) +
+                    (1.0 * image.pureName.length / 1000) +
+                    // put some prioritiy on non-fit image, since some fits are not displayed in correct colors yet
+                    if (image.isJpegTiffPng()) 0.001 else 0.0
             if (similarity > max) {
                 result = image
                 max = similarity
