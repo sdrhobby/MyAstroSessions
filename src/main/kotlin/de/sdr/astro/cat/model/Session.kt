@@ -7,7 +7,7 @@ import java.io.FilenameFilter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class Session(path: String) : PathObject(path), Comparable<Session>  {
+class Session(path: String) : PathObject(path), Comparable<Session> {
 
     val date: LocalDate
         get() = LocalDate.parse(name.substring(0, 10), DateTimeFormatter.ofPattern("yyyy-MM-dd"))
@@ -41,19 +41,18 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
                         // a LightImage will treat a subfolder under "lights" as filter
                         val image = LightImage(it.path)
                         imageMap[Model.LIGHTS]?.add(image)
-                    }
-                    else
+                    } else
                     // flats, darks, biases, darkflats
-                    if (pathObject.isCalibrationImage()) {
-                        val image = Image(it.path, Model.deriveImageTypeFromParentFolderName(folder))
-                        imageMap[folder]?.add(image)
-                    }
-                    // images directly under the session folder --> treated as RESULT images
-                    else if (pathObject.isSessionResultImage(this.name)) {
-                        // treat images directly under the session folder as results
-                        val image = Image(it.path, Model.RESULT)
-                        imageMap[Model.RESULTS]?.add(image)
-                    }
+                        if (pathObject.isCalibrationImage()) {
+                            val image = Image(it.path, Model.deriveImageTypeFromParentFolderName(folder))
+                            imageMap[folder]?.add(image)
+                        }
+                        // images directly under the session folder --> treated as RESULT images
+                        else if (pathObject.isSessionResultImage(this.name)) {
+                            // treat images directly under the session folder as results
+                            val image = Image(it.path, Model.RESULT)
+                            imageMap[Model.RESULTS]?.add(image)
+                        }
                 }
             }
 
@@ -77,7 +76,7 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
                 it.metadata.exposure ?: 0.0,
                 it.metadata.gain ?: 0,
                 it.metadata.bias ?: 0,
-                if ( it is LightImage ) (it as LightImage).filter else ""
+                if (it is LightImage) (it as LightImage).filter else ""
             )
             val count = isoExpMap[mapKey] ?: 0
             isoExpMap[mapKey] = count + 1
@@ -111,7 +110,7 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         } else Pair("", "")
     }
 
-    fun getCameraEntryFromMetadata() : String  {
+    fun getCameraEntryFromMetadata(): String {
         var camera = ""
         // get first light image and check metadata
         if (imageMap[Model.LIGHTS]?.size!! > 0) {
@@ -120,7 +119,8 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         }
         return camera
     }
-    fun getMountEntryFromMetadata() : String  {
+
+    fun getMountEntryFromMetadata(): String {
         var mount = ""
         // get first light image and check metadata
         if (imageMap[Model.LIGHTS]?.size!! > 0) {
@@ -130,34 +130,32 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         return mount
     }
 
-    fun hasResultImages() : Boolean {
+    fun hasResultImages(): Boolean {
         return ((imageMap[Model.RESULTS]?.size) ?: 0) > 0
     }
 
     fun guessBestResultImage(): Image? {
-        var result : Image? = null
-        if ( hasResultImages() ) {
-            // prefer jpeg, tif, png over fits (fits takes long to load)
-            result = mostSuitableImage( imageMap[Model.RESULTS]?.filter { it.isJpegTiffPng() } )
-            // fallback to fits, when no other is there
-            if ( result == null ) {
-                result = mostSuitableImage( imageMap[Model.RESULTS]?.filter { it.isFits() } )
-            }
+        var result: Image? = null
+        if (hasResultImages()) {
+            // fits are ok now, since own fits loading mechanism is of same speed than the jpeg/png ImageIO stuff
+            result = mostSuitableImage(imageMap[Model.RESULTS])
         }
         return result
     }
 
-    private fun mostSuitableImage(filtered: List<Image>? ): Image? {
-        var result : Image? = null
-        var max = 0.0
-        for (image in filtered!!) {
+    private fun mostSuitableImage(images: List<Image>?): Image? {
+        var result: Image? = null
+        var max = -1.0
+        for (image in images!!) {
             // if there is an image with "preview" in its name, just take this one
-            if ( image.pureName.lowercase().indexOf("preview") >= 0) {
+            if (image.pureName.lowercase().indexOf("preview") >= 0) {
                 result = image
                 break
             }
             // find similarity based on Levenstein distance
-            val similarity = Util.findSimilarity(image.pureName, astroObjectName)
+            // in case of same similarities the one with the longest name will win (very likely an edited version with a suffix)
+            // therefore adding here just the length of the pure image-name
+            val similarity = Util.findSimilarity(image.pureName, astroObjectName) + image.pureName.length
             if (similarity > max) {
                 result = image
                 max = similarity
@@ -166,11 +164,11 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         return result
     }
 
-    fun determineReadmeFileName() : String? {
+    fun determineReadmeFileName(): String? {
         val readmeFileFilter = FilenameFilter { _, s: String ->
             s.lowercase().endsWith(".txt") && (s.lowercase().contains("readme"))
         }
-        val readmeFiles = File(path).list( readmeFileFilter )
+        val readmeFiles = File(path).list(readmeFileFilter)
         if (readmeFiles?.isNotEmpty()!!)
             return readmeFiles[0]
         return "readme.txt"
@@ -183,13 +181,13 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
     /**
      * analyzes the Lights of the session and sorts them to a map where the filter is key
      */
-    fun createLightFiltersMap() : Map<String, List<Image>> {
-        val filterMap : MutableMap<String, MutableList<Image>> = mutableMapOf();
-        for ( image in imageMap[Model.LIGHTS]!! ) {
+    fun createLightFiltersMap(): Map<String, List<Image>> {
+        val filterMap: MutableMap<String, MutableList<Image>> = mutableMapOf();
+        for (image in imageMap[Model.LIGHTS]!!) {
             val lightImage = image as LightImage
             // TODO check this!
 //            if ( lightImage.filter != null && ! lightImage.filter.isEmpty() ) {
-            if ( lightImage.filter != null ) {
+            if (lightImage.filter != null) {
                 if (filterMap[lightImage.filter] == null) {
                     filterMap[lightImage.filter] = mutableListOf()
                 }
@@ -199,17 +197,17 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         return filterMap
     }
 
-    fun getFilterInfoString() : String {
+    fun getFilterInfoString(): String {
         // first let's look into the lights filtermap
-        val filterMap  = createLightFiltersMap()
+        val filterMap = createLightFiltersMap()
         var filters = ""
-        if ( ! filterMap.isEmpty() ) {
+        if (!filterMap.isEmpty()) {
             filters = filterMap.keys.joinToString { " " };
         }
         // try to get CFA value from first light
         else {
             val image = imageMap[Model.LIGHTS]?.get(0)
-            val cfa = image?.getMetadataValue( Constants.CFA )
+            val cfa = image?.getMetadataValue(Constants.CFA)
             filters = if (cfa != null) "Bayer Matrix" else ""
         }
         return filters
