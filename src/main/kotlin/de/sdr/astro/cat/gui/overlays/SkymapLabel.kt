@@ -6,7 +6,7 @@ import java.awt.*
 class SkymapLabel(val label: String, point: PointDouble, color: Color) : Overlay(point, color) {
 
     fun toConfigLine(): String {
-        return "overlayinfo:" + label + ";" + point.x + ";" + point.y
+        return "overlayinfo:" + label + ";" + position.x + ";" + position.y
     }
 
     companion object {
@@ -29,7 +29,7 @@ class SkymapLabel(val label: String, point: PointDouble, color: Color) : Overlay
      */
 
     override fun paint(g: Graphics, cDim: Dimension ) {
-        val p : Point = translateRelToContainerCoords( point, cDim)
+        val p : Point = translateRelToContainerCoords( position, cDim)
         val g2 = g as Graphics2D
         g2.setColor(color);
         g2.setStroke( BasicStroke(3F));

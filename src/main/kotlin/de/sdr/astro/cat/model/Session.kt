@@ -1,5 +1,6 @@
 package de.sdr.astro.cat.model
 
+import de.sdr.astro.cat.metadata.Constants
 import de.sdr.astro.cat.util.Util
 import java.io.File
 import java.io.FilenameFilter
@@ -186,12 +187,32 @@ class Session(path: String) : PathObject(path), Comparable<Session>  {
         val filterMap : MutableMap<String, MutableList<Image>> = mutableMapOf();
         for ( image in imageMap[Model.LIGHTS]!! ) {
             val lightImage = image as LightImage
-            if ( filterMap[lightImage.filter] == null ) {
-                filterMap[lightImage.filter] = mutableListOf()
+            // TODO check this!
+//            if ( lightImage.filter != null && ! lightImage.filter.isEmpty() ) {
+            if ( lightImage.filter != null ) {
+                if (filterMap[lightImage.filter] == null) {
+                    filterMap[lightImage.filter] = mutableListOf()
+                }
+                filterMap[lightImage.filter]?.add(lightImage)
             }
-            filterMap[lightImage.filter]?.add(lightImage)
         }
         return filterMap
+    }
+
+    fun getFilterInfoString() : String {
+        // first let's look into the lights filtermap
+        val filterMap  = createLightFiltersMap()
+        var filters = ""
+        if ( ! filterMap.isEmpty() ) {
+            filters = filterMap.keys.joinToString { " " };
+        }
+        // try to get CFA value from first light
+        else {
+            val image = imageMap[Model.LIGHTS]?.get(0)
+            val cfa = image?.getMetadataValue( Constants.CFA )
+            filters = if (cfa != null) "Bayer Matrix" else ""
+        }
+        return filters
     }
 
     override fun equals(other: Any?): Boolean {

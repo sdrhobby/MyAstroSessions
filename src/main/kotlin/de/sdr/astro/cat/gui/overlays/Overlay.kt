@@ -7,9 +7,9 @@ import java.awt.Graphics
 import java.awt.Point
 
 /***
- * @param point: PointDouble
+ * @param position: PointDouble
  */
-open class Overlay(val point: PointDouble, var color: Color) {
+open class Overlay(var position: PointDouble, var color: Color) {
 
     /**
      * translates the relative (percentage) x/y coordinates into real Coordinates for the current container size
@@ -26,7 +26,7 @@ open class Overlay(val point: PointDouble, var color: Color) {
      * @param cDim: Dimension ... the current dimension of the object to paint into
      */
     open fun paint( g : Graphics, cDim : Dimension  ) {
-        val p : Point = translateRelToContainerCoords( point, cDim)
+        val p : Point = translateRelToContainerCoords( position, cDim)
         g.setColor( color )
         g.drawOval(p.x, p.y, 10, 10)
     }
@@ -37,14 +37,14 @@ open class Overlay(val point: PointDouble, var color: Color) {
 
         other as Overlay
 
-        if (point != other.point) return false
+        if (position != other.position) return false
         if (color != other.color) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = point.hashCode()
+        var result = position.hashCode()
         result = 31 * result + color.hashCode()
         return result
     }

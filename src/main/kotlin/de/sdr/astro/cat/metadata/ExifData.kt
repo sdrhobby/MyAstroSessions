@@ -10,23 +10,23 @@ import java.time.format.DateTimeFormatter
 class ExifData(val path: String) {
 
     private val relevantTags = mapOf(
-        "camera" to "Model",
-        "width" to "Image Width",
-        "height" to "Image Height",
-        "exposure" to "Exposure Time",
-        "iso" to "ISO Speed Ratings",
-        "gain" to "GAIN",   // TODO: check
-        "bias" to "BIAS",   // TODO: check
+        Constants.CAMERA to "Model",
+        Constants.WIDTH to "Image Width",
+        Constants.HEIGHT to "Image Height",
+        Constants.EXPOSURE to "Exposure Time",
+        Constants.ISO to "ISO Speed Ratings",
+        Constants.GAIN to "GAIN",   // TODO: check
+        Constants.BIAS to "BIAS",   // TODO: check
 
-        "cfa" to "CFA Pattern",
+        Constants.CFA to "CFA Pattern",
         "sensing-method" to "Sensing Method",
         "file-size" to "File Size",
         "make" to "Make",
-        "date" to "Date/Time",
-        "time" to "Date/Time"
+        Constants.DATE to "Date/Time",
+        Constants.TIME to "Date/Time"
     )
-    private val relevantInfo: MutableMap<String, String> = mutableMapOf()
-    var metadata : Metadata? = null
+    private val info: MutableMap<String, String> = mutableMapOf()
+    var metadata: Metadata? = null
 
     init {
         try {
@@ -34,8 +34,14 @@ class ExifData(val path: String) {
 
             for (directory in metadata!!.directories) {
                 for (tag in directory.tags) {
-                    if (relevantTags.values.contains(tag.tagName)) {
-                        this.relevantInfo[tag.tagName] = tag.description
+                    // the "relevant" entries will get keys common for EXIF and FIT
+                    val relevantKey: String? = getMapKey(relevantTags, tag.tagName)
+                    if (relevantKey != null) {
+                        this.info[relevantKey] = tag.description
+                    } else {
+                        // the rest will use their native Exif tag-names
+                        if (tag.description != null)
+                            this.info[tag.tagName] = tag.description
                     }
                 }
             }
@@ -44,25 +50,34 @@ class ExifData(val path: String) {
         }
     }
 
+    fun <K, V> getMapKey(map: Map<K, V>, target: V): K? {
+        for ((key, value) in map) {
+            if (target == value) {
+                return key
+            }
+        }
+        return null
+    }
+
     fun getCameraModel(): String? {
-        return relevantInfo[relevantTags["camera"]]
+        return info[Constants.CAMERA]
     }
 
     fun getCameraMaker(): String? {
-        return relevantInfo[relevantTags["make"]]
+        return info[relevantTags["make"]]
     }
 
     fun getWidth(): String? {
-        return relevantInfo[relevantTags["width"]]?.filter { it.isDigit() }
+        return info[Constants.WIDTH]?.filter { it.isDigit() }
     }
 
     fun getHeight(): String? {
-        return relevantInfo[relevantTags["height"]]?.filter { it.isDigit() }
+        return info[Constants.HEIGHT]?.filter { it.isDigit() }
     }
 
     fun getExposureTime(): Double {
         // 1497/5 sec
-        val parts = relevantInfo[relevantTags["exposure"]]?.split(" ")
+        val parts = info[Constants.EXPOSURE]?.split(" ")
         val s = parts?.get(0) ?: "0/1"
         // handle different formats (1/4000 vs. 0.2)
         if (s.indexOf("/") > 0) {
@@ -73,48 +88,61 @@ class ExifData(val path: String) {
     }
 
     fun getIso(): String? {
-        return relevantInfo[relevantTags["iso"]]?.filter { it.isDigit() }
+        return info[Constants.ISO]?.filter { it.isDigit() }
     }
+
     fun getGain(): String? {
-        return relevantInfo[relevantTags["gain"]]?.filter { it.isDigit() }
+        return info[Constants.GAIN]?.filter { it.isDigit() }
     }
+
     fun getBias(): String? {
-        return relevantInfo[relevantTags["bias"]]?.filter { it.isDigit() }
+        return info[Constants.BIAS]?.filter { it.isDigit() }
     }
 
 
     fun getCFAMode(): String? {
-        return relevantInfo[relevantTags["cfa"]]
+        return info[Constants.CFA]
     }
 
     fun getSensingMethod(): String? {
-        return relevantInfo[relevantTags["sensing-method"]]
+        return info[relevantTags["sensing-method"]]
     }
 
     fun getFileSize(): String? {
-        return relevantInfo[relevantTags["file-size"]]?.filter { it.isDigit() }
+        return info[relevantTags["file-size"]]?.filter { it.isDigit() }
     }
 
     fun getDate(): LocalDate? {
-        val s = relevantInfo[relevantTags["date"]]
+        val s = info[Constants.DATE]
         val d = s?.substring(0, s.indexOf(" "))
         return LocalDate.parse(d, DateTimeFormatter.ofPattern("yyyy:MM:dd"))
     }
 
     fun getTime(): LocalTime? {
-        val s = relevantInfo[relevantTags["date"]]
+        val s = info[Constants.DATE]
         val d = s?.substring(s.indexOf(" ") + 1)
         return LocalTime.parse(d)
     }
 
-    fun getAllData() : List<List<String>> {
-        val rows : MutableList<List<String>> = mutableListOf()
+    fun getAllData(): List<List<String>> {
+        val rows: MutableList<List<String>> = mutableListOf()
         for (directory in metadata!!.directories) {
             for (tag in directory.tags) {
-                rows.add( listOf(tag.tagName?: "", tag.description?: "", "") )
+                rows.add(listOf(tag.tagName ?: "", tag.description ?: "", ""))
             }
         }
         return rows
+    }
+
+    /**
+     * request a value from the info map
+     * The key may be one of the predefined values in @ref Constants, which is common for EXIF and FITS
+     * or it may be a native Exif key.
+     * @param key ... see above
+     * @return value: String ... the corrsponding value as String (without any treatment) or null, if nothing is found
+     */
+    fun getValueByKey(key: String): String? {
+        return info[key]
     }
 
 }

@@ -40,7 +40,15 @@ class PopupMenuHandler(private val tree: JTree) {
                     handleNewSession(pathObject)
                 }
             }
-        } else if (node.nodeType == Model.FILTER) {
+        } else if ( node.nodeType == Model.SESSION ) {
+            pop = JPopupMenu()
+            val menuItemImageExporter = JMenuItem(Config.getInstance().l10n.getString("menu_show.imageexporter"))
+            menuItemImageExporter.addActionListener {
+                AstroCatGui.getInstance().showImageExporterDialog()
+            }
+            pop.add(menuItemImageExporter)
+        }
+        else if (node.nodeType == Model.FILTER) {
             pop = JPopupMenu()
             val itemImage = JMenuItem(Config.getInstance().l10n.getString("popup_show.filtername.check"))
             pop.add(itemImage)

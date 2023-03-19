@@ -18,4 +18,8 @@ open class Image : PathObject {
         }
         metadata.addFileNameData(FileNameData(this))
     }
+
+    fun getMetadataValue(key : String) : String? {
+        return metadata?.getMetadataByKey(key)
+    }
 }

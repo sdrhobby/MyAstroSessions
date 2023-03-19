@@ -7,16 +7,16 @@ import nom.tam.fits.ImageHDU
 class FitsData(val path: String) {
 
     private val keys = mapOf(
-        "camera" to "INSTRUME",
-        "width" to "NAXIS1",
-        "height" to "NAXIS2",
-        "exposure" to "EXPTIME",
-        "iso" to "ISOSPEED",
-        "gain" to "GAIN",   // TODO: double-check
-        "bias" to "BIAS",   // TODO: double-check
+        Constants.CAMERA to "INSTRUME",
+        Constants.WIDTH to "NAXIS1",
+        Constants.HEIGHT to "NAXIS2",
+        Constants.EXPOSURE to "EXPTIME",
+        Constants.ISO to "ISOSPEED",
+        Constants.GAIN to "GAIN",   // TODO: double-check
+        Constants.BIAS to "BIAS",   // TODO: double-check
 
-        "cfa" to "BAYERPAT",  // cfa = color filter array
-        "mount" to "TELESCOP",
+        Constants.CFA to "BAYERPAT",  // cfa = color filter array
+        Constants.MOUNT to "TELESCOP",
         "pixsizex" to "PIXSIZE1",
         "pixsizey" to "PIXSIZE2",
         "binx" to "XBINNING",
@@ -94,4 +94,17 @@ class FitsData(val path: String) {
     fun getMount(): String? {
         return fitsHeader.getStringValue(keys["mount"])
     }
+
+    /**
+     * request a value from the info map
+     * The key may be one of the predefined values in @ref Constants, which is common for EXIF and FITS
+     * or it may be a native Exif key.
+     * @param key ... see above
+     * @return value: String ... the corrsponding value as String (without any treatment) or null, if nothing is found
+     */
+    fun getValueByKey(key: String) : String? {
+        val translatedKey = if ( keys[key] != null ) keys[key] else key;
+        return fitsHeader.getStringValue(translatedKey)
+    }
+
 }

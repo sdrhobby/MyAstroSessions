@@ -15,7 +15,7 @@ class RectangleOverlay( point : PointDouble, val point2 : PointDouble, color: Co
      * @param cDim: Dimension ... the current dimension of the object to paint into
      */
     override  fun paint(g : Graphics, cDim : Dimension ) {
-        val p : Point = translateRelToContainerCoords( point, cDim)
+        val p : Point = translateRelToContainerCoords( position, cDim)
         val p2 : Point = translateRelToContainerCoords( point2, cDim)
         g.setColor( color )
         g.drawRect(p.x, p.y, p2.x - p.x, p2.y - p.y)

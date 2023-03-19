@@ -1,7 +1,9 @@
 package de.sdr.astro.cat.config
 
+import de.sdr.astro.cat.gui.overlays.OverlayConfig
 import de.sdr.astro.cat.gui.overlays.SkymapLabel
 import de.sdr.astro.cat.model.Session
+import java.awt.Color
 import java.awt.Dimension
 import java.awt.Point
 import java.io.*
@@ -26,6 +28,7 @@ class Config private constructor() {
     var locationOnScreen = Point(0, 0)
     var frameSize = Dimension(1000, 660)
     var locale = ""
+    val overlayConfig = OverlayConfig( 2.0, Color.LIGHT_GRAY, Color.YELLOW)
 
     val unknownConfigLines: MutableList<String> = mutableListOf()
 

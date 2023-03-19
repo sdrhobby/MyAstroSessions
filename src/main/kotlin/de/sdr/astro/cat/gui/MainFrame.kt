@@ -18,9 +18,6 @@ import kotlin.system.exitProcess
 
 class MainFrame : JFrame() {
 
-    var exporterDialog: JDialog? = null
-    var imageExportPanel: ImageExportPanel? = null
-
     init {
 
         SwingUtilities.invokeLater {
@@ -78,7 +75,7 @@ class MainFrame : JFrame() {
 
         val menuItemImageExporter = JMenuItem(Config.getInstance().l10n.getString("menu_show.imageexporter"))
         menuItemImageExporter.addActionListener {
-            showImageExporterDialog()
+            AstroCatGui.getInstance().showImageExporterDialog()
         }
 
         val menuItemExit = JMenuItem(Config.getInstance().l10n.getString("menu_end"))
@@ -153,18 +150,6 @@ class MainFrame : JFrame() {
         equipmentDialog.isVisible = true
     }
 
-    private fun showImageExporterDialog() {
-        if (exporterDialog == null) {
-            exporterDialog = JDialog(this)
-            exporterDialog!!.title = Config.getInstance().l10n.getString("exporter_title")
-            imageExportPanel = ImageExportPanel()
-            exporterDialog!!.contentPane = imageExportPanel!!.topPanel
-            exporterDialog!!.pack()
-            exporterDialog!!.setLocationRelativeTo(null)
-        }
-        imageExportPanel!!.setSession(AstroCatGui.getInstance().lastSelectedSession)
-        exporterDialog!!.isVisible = true
-    }
 }
 
 class MyWindowListener : WindowListener {

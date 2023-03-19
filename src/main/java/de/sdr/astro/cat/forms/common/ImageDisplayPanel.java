@@ -205,4 +205,7 @@ public class ImageDisplayPanel extends JPanel {
         g2.drawImage(doubleBuffer, xOff, yOff, scaledW, scaledH, this);
     }
 
+    public BufferedImage exportVisibleImage() {
+        return doubleBuffer;
+    }
 }
