@@ -126,7 +126,7 @@ It produces some previews and can show standard images (jpeg, png, tiff etc.), b
 
 Display of RAW DSLR images (NEF, CR2 ...) is not possible yet at all - any help on that topic is welcome! 
 
-The display of FITS images is limited to the first image layer for now, but it is rather fast. 
+The display of FITS images works (now also in color) for most files I have tried. There is still an issue with some fits-files written by Gimp (interpreting the color range wrong and producing unusable previews). 
 Credits for the fits-library go to: http://nom-tam-fits.github.io/nom-tam-fits/index.html 
 
 The exif-metadata part is using https://github.com/drewnoakes/metadata-extractor - thanks to Drew Noakes for this peace of SW!
