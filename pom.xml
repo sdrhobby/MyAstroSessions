@@ -6,7 +6,7 @@
 
     <artifactId>MyAstroSessions</artifactId>
     <groupId>de.sdr.astro.cat</groupId>
-    <version>0.9</version>
+    <version>0.9.1</version>
     <packaging>jar</packaging>
 
     <name>consoleApp</name>

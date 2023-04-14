@@ -100,6 +100,7 @@ class MainFrame : JFrame() {
             LafManager.setTheme(IntelliJTheme())
             LafManager.install()
             LafManager.forceLafUpdate()
+            Config.getInstance().theme = "light"
         }
         val menuItemDarkTheme = JMenuItem("Dark")
         menuItemDarkTheme.setMnemonic('D')
@@ -107,6 +108,7 @@ class MainFrame : JFrame() {
             LafManager.setTheme(DarculaTheme())
             LafManager.install()
             LafManager.forceLafUpdate()
+            Config.getInstance().theme = "dark"
         }
 
         val themesMenu = JMenu(Config.getInstance().l10n.getString("menu_themes"))

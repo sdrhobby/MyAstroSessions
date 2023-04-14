@@ -1,0 +1,12 @@
+
+version 0.9.1
+- added image exporter module allowing interactive definition of session related overlays and saving of images
+- CTRL-S in readme.txt now immediately saves the file
+- bugfix: saving and restoring of theme to config
+
+version 0.9
+- 90% feature complete
+- major functionality for viewing session info + details
+- folder, timeline and object views functional
+- basic string pattern search in different tree-views
+- ...

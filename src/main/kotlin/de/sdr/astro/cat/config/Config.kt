@@ -29,6 +29,7 @@ class Config private constructor() {
     var frameSize = Dimension(1000, 660)
     var locale = ""
     val overlayConfig = OverlayConfig( 2.0, Color.LIGHT_GRAY, Color.YELLOW)
+    var theme = "light"
 
     val unknownConfigLines: MutableList<String> = mutableListOf()
 
@@ -68,6 +69,7 @@ class Config private constructor() {
         fw.write("# default Astro-image folder" + System.lineSeparator())
         fw.write("folder=" + getInstance().scanFolder + System.lineSeparator())
         fw.write("autoscan=$autoscan" + System.lineSeparator())
+        fw.write("theme=$theme" + System.lineSeparator())
 
         fw.write(System.lineSeparator())
         fw.write("# Telescope configurations" + System.lineSeparator())
@@ -141,6 +143,8 @@ class Config private constructor() {
                     scanFolder = line.substring(line.indexOf('=') + 1).trim()
                 } else if (line.startsWith("autoscan")) {
                     autoscan = (line.substring(line.indexOf('=') + 1).trim()) == "true"
+                } else if (line.startsWith("theme")) {
+                    theme = line.substring(line.indexOf('=') + 1).trim().lowercase()
                 } else if (line.startsWith("telescope_")) {
                     telescopes.add(Telescope.fromConfigLine(line))
                 } else if (line.startsWith("camera_")) {

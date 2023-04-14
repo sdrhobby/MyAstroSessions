@@ -4,6 +4,10 @@ import de.sdr.astro.cat.config.Config;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,7 +36,16 @@ public class EditorPanel {
             // TODO: confirmation dialog
             saveToFile();
         });
+        btnSaveEditor.setMnemonic('S');
 
+        editorPane.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if ((e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) == KeyEvent.CTRL_DOWN_MASK && (e.getKeyCode() == KeyEvent.VK_S)) {
+                    saveToFile();
+                }
+            }
+        });
     }
 
     private void fillEditor() {
@@ -47,6 +60,7 @@ public class EditorPanel {
 
     private void saveToFile() {
         try {
+            System.out.println("writing readme-file: " + filePath);
             FileWriter writer = new FileWriter(filePath);
             writer.write(editorPane.getText());
             originalText = editorPane.getText();
@@ -154,4 +168,5 @@ public class EditorPanel {
     public JComponent $$$getRootComponent$$$() {
         return topPanel;
     }
+
 }
