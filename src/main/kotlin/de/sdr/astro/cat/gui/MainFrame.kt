@@ -9,6 +9,7 @@ import de.sdr.astro.cat.forms.AstroCatGui
 import de.sdr.astro.cat.forms.ConfigPanel
 import de.sdr.astro.cat.forms.ImageExportPanel
 import java.awt.Color
+import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
 import javax.swing.*
@@ -154,27 +155,9 @@ class MainFrame : JFrame() {
 
 }
 
-class MyWindowListener : WindowListener {
-    override fun windowOpened(p0: WindowEvent?) {
-    }
-
+class MyWindowListener : WindowAdapter() {
     override fun windowClosing(event: WindowEvent?) {
         Config.getInstance().updateGeometry(event?.window?.location!!, event.window?.size!!)
         Config.getInstance().saveConfig()
-    }
-
-    override fun windowClosed(p0: WindowEvent?) {
-    }
-
-    override fun windowIconified(p0: WindowEvent?) {
-    }
-
-    override fun windowDeiconified(p0: WindowEvent?) {
-    }
-
-    override fun windowActivated(p0: WindowEvent?) {
-    }
-
-    override fun windowDeactivated(p0: WindowEvent?) {
     }
 }
