@@ -15,8 +15,8 @@ class ExifData(val path: String) {
         Constants.HEIGHT to "Image Height",
         Constants.EXPOSURE to "Exposure Time",
         Constants.ISO to "ISO Speed Ratings",
-        Constants.GAIN to "GAIN",   // TODO: check
-        Constants.BIAS to "BIAS",   // TODO: check
+        Constants.GAIN to "GAIN",   // check --> confirmed
+        Constants.BIAS to "OFFSET",   // found examples using OFFSET for that (my indi-toupcam images don't have it at all)
 
         Constants.CFA to "CFA Pattern",
         "sensing-method" to "Sensing Method",
