@@ -1,4 +1,7 @@
 
+version 0.9.2
+- bugfix: don't attempt to parse filenames of unknown filename-pattern
+
 version 0.9.1
 - added image exporter module allowing interactive definition of session related overlays and saving of images
 - CTRL-S in readme.txt now immediately saves the file
